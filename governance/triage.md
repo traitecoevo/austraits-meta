@@ -6,12 +6,15 @@ The label taxonomy lives in [`labels.yml`](labels.yml); board conventions in
 
 ## Labelling discipline
 
-Every issue should end triage with **at least one of each** of these axes:
+Every issue should end triage with:
 
 - **`pkg:*`** — which package/area. (More than one is fine for cross-cutting issues; pair with `cross:*`.)
-- **`type:*`** — bug / feature / docs / refactor / infra / data.
-- **`priority:*`** — set when triaged (aligns to board #9's Priority field).
-- **`status:*`** — workflow state (aligns to board #9's Status field).
+- **`type:*`** — bug / feature / docs / refactor / infra / data / epic.
+- **Board Priority + Status** — set on the board card, **not** as labels. The board owns these; there
+  are deliberately no `priority:*` labels and no `status:` labels for Backlog/In-Progress/Done/On-going
+  (see [`project-board.md`](project-board.md) → "Division of labour").
+- **`status:*`** — only the out-of-band states the board can't express: `status:triage` (pre-board),
+  `status:blocked`, `status:needs-info`.
 
 Add **`cross:*`** whenever the work spans repos:
 
@@ -26,7 +29,7 @@ family.
 ## New issue → done (the short version)
 
 1. New issue lands → `status:triage` + `pkg:*` + `type:*`.
-2. Triaged → add `priority:*`, set board **Status = Backlog**, add to board #9.
+2. Triaged → set board **Priority** + board **Status = Backlog**; drop `status:triage`.
 3. Started → board **Status = In Progress**.
 4. Cross-package? → add `cross:*` and **link the partner issues in the other repos**. Use the
    relevant playbook in `release-playbooks.md`.

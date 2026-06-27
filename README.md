@@ -17,6 +17,7 @@ and the shared label/triage/release conventions.
 | [`governance/labels.yml`](governance/labels.yml) | Family label taxonomy — single source of truth. |
 | [`governance/apply-labels.sh`](governance/apply-labels.sh) | Idempotent sync of labels to family repos (**gated**; hard-coded repo list). |
 | [`governance/project-board.md`](governance/project-board.md) | Structure & conventions of family board [#9](https://github.com/orgs/traitecoevo/projects/9). |
+| [`governance/auto-add-to-board.md`](governance/auto-add-to-board.md) | How new issues from all repos auto-add to board #9 (workflow + token secret). |
 | [`governance/release-playbooks.md`](governance/release-playbooks.md) | Cross-repo release sequences (e.g. "dictionary change → rebuild X then Y"). |
 | [`governance/triage.md`](governance/triage.md) | Contribution + triage discipline; open scope questions. |
 

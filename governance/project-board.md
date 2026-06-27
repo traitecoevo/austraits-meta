@@ -34,30 +34,29 @@ family-local (`pkg:*`) and there is no cross-family `family:` axis.
 > ⚠️ `low prioirity` is misspelled in the board config. **TODO (maintainer):** fix the typo (renaming a
 > single-select option preserves existing assignments).
 
-## Label → board mapping (proposed)
+## Division of labour: labels vs board fields (decided 2026-06-28)
 
-The label taxonomy in [`labels.yml`](labels.yml) is designed to line up with the board fields so the
-two don't drift:
+Board single-selects and repo labels are **separate** GitHub primitives — setting a label does NOT
+set the board field, and vice versa. Rather than mirror them (which drifts), we split ownership:
 
-| Label axis | Board field | Mapping |
-|------------|-------------|---------|
-| `priority:high` / `priority:medium` / `priority:low` / `priority:no-plans` | **Priority** | 1:1 with `high/medium/low priority` and `no plans to implement` |
-| `status:backlog` / `status:in-progress` / `status:ongoing` | **Status** | 1:1 with `Backlog` / `In Progress` / `On-going` |
-| `status:triage` | **Status** | pre-board state: issue exists but not yet placed/assessed |
-| `status:blocked`, `status:needs-info` | (no board column) | label-only signals; board Status stays as-is |
-| `pkg:*` | **Repository** + Labels | the `Repository` field already says which repo; `pkg:*` lets you filter/group across repos and on issues that span repos |
-| `cross:*` | Labels | the cross-package signals this meta repo exists to track; no board column |
+| Concern | Owner | Notes |
+|---------|-------|-------|
+| **Status** (Backlog / In Progress / Done / On-going) | **Board Status field** | The single source of truth. No mirrored `status:` labels for these. |
+| **Priority** (high / medium / low / no-plans) | **Board Priority field** | The single source of truth. **No `priority:` labels** (they'd duplicate a field used on only ~27% of items today). |
+| Which component | **Board `Repository` field** + `pkg:*` labels | `Repository` is automatic per item; `pkg:*` adds cross-repo filtering and labels issues that *affect* another package. |
+| Kind of work | `type:*` labels | `type:epic` pairs with the board's native Parent/Sub-issues fields. |
+| Cross-package impact | `cross:*` labels | No board column; the signal this meta repo exists to track. |
+| Pre-board / out-of-band states | `status:triage` / `status:blocked` / `status:needs-info` | The only `status:` labels — they express what the board's Status column can't. |
 
-> Note: board single-selects and repo labels are **separate** GitHub primitives — setting a label does
-> not auto-set the board Status, and vice versa. The mapping above is a **convention** for humans/agents
-> to keep them consistent, not an automation. **TODO (maintainer):** decide whether to add a GitHub
-> Actions workflow to sync label ↔ Status automatically, or keep it manual.
+> Because Status/Priority live only on the board, an issue's board card is where you set them; the
+> labels never need to be kept in sync with a field.
 
 ## Triage workflow (proposed — needs maintainer confirmation)
 
-1. **New issue** → gets `status:triage` + a `pkg:*` + a `type:*` label. Not yet on the board.
-2. **Triaged** → assign `priority:*`, set board **Status = Backlog** (`status:backlog`), add to board #9.
-3. **Started** → board **Status = In Progress** (`status:in-progress`), assignee set.
+1. **New issue** → auto-added to board #9 (see [`auto-add-to-board.md`](auto-add-to-board.md)); gets
+   `status:triage` + a `pkg:*` + a `type:*` label.
+2. **Triaged** → set board **Priority** + board **Status = Backlog**; remove `status:triage`.
+3. **Started** → board **Status = In Progress**, assignee set.
 4. **Cross-package** → add `cross:ripple` / `cross:breaking` / `cross:contract` and link the issues in
    the other affected repos (see `release-playbooks.md`).
 5. **Done** → board **Status = Done**, issue closed.

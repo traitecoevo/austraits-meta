@@ -99,12 +99,51 @@ echo "Target repos (${#REPOS[@]}):"; printf '  - %s\n' "${REPOS[@]}"
 $APPLY || echo $'\n*** DRY RUN — nothing will change. Re-run with --apply to sync. ***'
 echo
 
+# --- Migration map: rename existing labels in place so already-tagged issues carry over -------
+# Applied per repo ONLY when the OLD label exists and the NEW one does not. Includes austraits'
+# emoji-suffixed variants. After a rename, phase 2 (--force create) fixes colour/description.
+RENAME_MAP=(
+  "bug=>type:bug"
+  "enhancement=>type:feature"
+  "documentation=>type:docs"
+  "epic=>type:epic"
+  "blocked=>status:blocked"
+  "bug 🐛=>type:bug"
+  "enhancement ✨=>type:feature"
+  "documentation 📝=>type:docs"
+  "duplicate 👥=>duplicate"
+  "good first issue 🐾=>good first issue"
+  "help wanted 😇=>help wanted"
+  "question 🙋=>question"
+  "wontfix 🦉=>wontfix"
+)
+
 for repo in "${REPOS[@]}"; do
   echo "==> $repo"
+  existing="$(gh label list --repo "$repo" --limit 200 --json name -q '.[].name' 2>/dev/null)"
+
+  # Phase 1: rename legacy labels into the new scheme.
+  for pair in "${RENAME_MAP[@]}"; do
+    old="${pair%%=>*}"; new="${pair##*=>}"
+    printf '%s\n' "$existing" | grep -Fxq -- "$old" || continue          # old not present
+    if printf '%s\n' "$existing" | grep -Fxq -- "$new"; then
+      echo "    NOTE: both '$old' and '$new' exist — merge manually (not auto-deleting '$old')"
+      continue
+    fi
+    if $APPLY; then
+      gh label edit "$old" --repo "$repo" --name "$new" >/dev/null && echo "    renamed: '$old' -> '$new'"
+      existing="$(printf '%s\n%s' "$existing" "$new")"                   # so later rules see it
+    else
+      echo "    would rename: '$old' -> '$new'"
+    fi
+  done
+
+  # Phase 2: create/update the full taxonomy (idempotent).
   while IFS=$'\t' read -r name color desc; do
     [ -n "$name" ] || continue
     if $APPLY; then
-      gh label create "$name" --repo "$repo" --color "$color" --description "$desc" --force
+      gh label create "$name" --repo "$repo" --color "$color" --description "$desc" --force >/dev/null \
+        && echo "    synced: $name"
     else
       echo "    would sync: $name (#$color) — $desc"
     fi
@@ -112,11 +151,11 @@ for repo in "${REPOS[@]}"; do
 done
 
 echo
-$APPLY && echo "Done. Labels synced to ${#REPOS[@]} repo(s)." \
-       || echo "Dry run complete. ${LABEL_COUNT} labels x ${#REPOS[@]} repos would be synced."
+$APPLY && echo "Done. Renamed legacy labels + synced ${LABEL_COUNT} labels to ${#REPOS[@]} repo(s)." \
+       || echo "Dry run complete. Would rename legacy labels + sync ${LABEL_COUNT} labels x ${#REPOS[@]} repos."
 
 # --- Optional cleanup (NOT automated) --------------------------------------------------------
-# GitHub seeds new repos with default labels (bug, enhancement, documentation, question, ...).
-# This script does not remove them. If maintainers want a clean taxonomy, delete per repo with:
-#   gh label delete enhancement --repo traitecoevo/<repo> --yes
-# Decide this deliberately; some repos may have existing issues using the defaults.
+# Legacy labels mapped above are RENAMED (issues carry over). Labels NOT in the map are left as-is
+# (e.g. 'new trait suggestion', 'data submissions', 'coming soon!', 'invalid'). To remove an
+# unwanted default that has no issues, delete deliberately:
+#   gh label delete <name> --repo traitecoevo/<repo> --yes

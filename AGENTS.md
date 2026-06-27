@@ -155,7 +155,8 @@ See `governance/release-playbooks.md` for the step-by-step versions of these.
 - [`governance/apply-labels.sh`](governance/apply-labels.sh) — idempotent sync of labels to the family
   repos. **Gated**: hard-coded repo list, run only with maintainer go-ahead.
 - [`governance/project-board.md`](governance/project-board.md) — structure/conventions of family board
-  [#9](https://github.com/orgs/traitecoevo/projects/9).
+  [#9](https://github.com/orgs/traitecoevo/projects/9); labels-vs-board-fields division of labour.
+- [`governance/auto-add-to-board.md`](governance/auto-add-to-board.md) — auto-add new issues to board #9.
 - [`governance/release-playbooks.md`](governance/release-playbooks.md) — cross-repo release sequences.
 - [`governance/triage.md`](governance/triage.md) — contribution + triage discipline, plus open scope
   questions for maintainers.
