@@ -43,10 +43,36 @@ set the board field, and vice versa. Rather than mirror them (which drifts), we 
 |---------|-------|-------|
 | **Status** (Backlog / In Progress / Done / On-going) | **Board Status field** | The single source of truth. No mirrored `status:` labels for these. |
 | **Priority** (high / medium / low / no-plans) | **Board Priority field** | The single source of truth. **No `priority:` labels** (they'd duplicate a field used on only ~27% of items today). |
-| Which component | **Board `Repository` field** + `pkg:*` labels | `Repository` is automatic per item; `pkg:*` adds cross-repo filtering and labels issues that *affect* another package. |
-| Kind of work | `type:*` labels | `type:epic` pairs with the board's native Parent/Sub-issues fields. |
+| Which **repo/package** | **Board `Repository` field** + `pkg:*` labels | `Repository` is automatic per item; `pkg:*` adds cross-repo filtering and labels issues that *affect* another package. |
+| Which **sub-area within a repo** | **`[prefix]` in the issue title** | Org convention borrowed from plant #5 (e.g. `[env drivers] ...`). Lightweight; good for modules inside one repo. See below. |
+| Kind of work | **`bug` / `task` / `epic` labels** | Shared org-wide core (== plant #5). `epic` pairs with the board's native Parent/Sub-issues fields. |
 | Cross-package impact | `cross:*` labels | No board column; the signal this meta repo exists to track. |
 | Pre-board / out-of-band states | `status:triage` / `status:blocked` / `status:needs-info` | The only `status:` labels — they express what the board's Status column can't. |
+
+### Grouping: `Repository` + `pkg:` (austraits) vs `[prefix]` titles (plant)
+
+The two families group differently because they're shaped differently:
+
+- **plant-family** is essentially one big repo (`plant` = 112/130 board items), so it groups by
+  **module via a title prefix**: `[env drivers] ...`, `[interface] ...`. Its board `Area` field exists
+  but is barely used; the prefix is the real convention.
+- **austraits-family** is genuinely multi-repo, so the **`Repository` field already carries the
+  package axis**, reinforced by `pkg:*` labels. The plant-style `[prefix]` is still useful for
+  **sub-areas inside one repo** (e.g. `[schema]`, `[taxonomy]` within traits.build) — adopt it as the
+  shared org convention for that finer grain, on top of `Repository`/`pkg:`.
+
+> **Converging:** plant-family is itself going multi-repo, so it will adopt the same mechanism —
+> `Repository` + `pkg:*` labels for the repo axis, `[prefix]` titles for sub-areas, and the `Area`
+> field for cross-cutting cuts like dev/data. In other words `pkg:`, `cross:`, and `Area` are the
+> shared **org-wide multi-repo pattern**, not austraits-only; each family just supplies its own repos.
+
+### Dev vs data — the `Area` field (decided 2026-06-28)
+
+One board, sliced by an **`Area` single-select field** (`dev` / `data`) — mirroring plant #5's `Area`
+field — rather than a second board. Note much of the split already falls out of `Repository`
+(`austraits.build` ≈ data; the R packages ≈ dev), so the `Area` field mainly helps when data work
+shows up in other repos (e.g. APD content). Create it on the board, then add saved **views**
+"Dev" (`Area = dev`) and "Data" (`Area = data`). The field is a board object, not a label.
 
 > Because Status/Priority live only on the board, an issue's board card is where you set them; the
 > labels never need to be kept in sync with a field.
@@ -54,7 +80,7 @@ set the board field, and vice versa. Rather than mirror them (which drifts), we 
 ## Triage workflow (proposed — needs maintainer confirmation)
 
 1. **New issue** → auto-added to board #9 (see [`auto-add-to-board.md`](auto-add-to-board.md)); gets
-   `status:triage` + a `pkg:*` + a `type:*` label.
+   `status:triage` + a `pkg:*` + a work-type (`bug` / `task` / `epic`) label.
 2. **Triaged** → set board **Priority** + board **Status = Backlog**; remove `status:triage`.
 3. **Started** → board **Status = In Progress**, assignee set.
 4. **Cross-package** → add `cross:ripple` / `cross:breaking` / `cross:contract` and link the issues in
@@ -68,4 +94,5 @@ set the board field, and vice versa. Rather than mirror them (which drifts), we 
 - [ ] Decide whether label ↔ board-Status syncing should be automated.
 - [x] ~~Decide whether `austraits.build` (and the API/book/website repos) carry the same labels~~ —
       **Decided 2026-06-28: yes, the whole family folder.** See `triage.md` → "Scope decisions".
-- [ ] Decide a default board view/grouping convention (by Repository? by Status? by Priority?).
+- [x] ~~Decide a default board view/grouping convention~~ — **add `Area` field (dev/data) + saved
+      "Dev"/"Data" views; group by `Repository`/`pkg:`; `[prefix]` titles for sub-areas** (above).

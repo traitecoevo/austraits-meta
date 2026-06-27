@@ -102,15 +102,15 @@ echo
 # --- Migration map: rename existing labels in place so already-tagged issues carry over -------
 # Applied per repo ONLY when the OLD label exists and the NEW one does not. Includes austraits'
 # emoji-suffixed variants. After a rename, phase 2 (--force create) fixes colour/description.
+# Core (bug/epic) keep their names — they're already correct; phase 2 just restyles colour/desc.
+# enhancement -> task (most enhancement issues are discrete work; re-tag the few true epics by hand).
+# 'documentation', 'coming soon!', 'new trait suggestion', 'data submissions' are NOT mapped — left
+# as repo-local labels (re-tag doc issues as 'task' manually if you want plant-style minimalism).
 RENAME_MAP=(
-  "bug=>type:bug"
-  "enhancement=>type:feature"
-  "documentation=>type:docs"
-  "epic=>type:epic"
+  "enhancement=>task"
   "blocked=>status:blocked"
-  "bug 🐛=>type:bug"
-  "enhancement ✨=>type:feature"
-  "documentation 📝=>type:docs"
+  "bug 🐛=>bug"
+  "enhancement ✨=>task"
   "duplicate 👥=>duplicate"
   "good first issue 🐾=>good first issue"
   "help wanted 😇=>help wanted"

@@ -9,7 +9,7 @@ The label taxonomy lives in [`labels.yml`](labels.yml); board conventions in
 Every issue should end triage with:
 
 - **`pkg:*`** — which package/area. (More than one is fine for cross-cutting issues; pair with `cross:*`.)
-- **`type:*`** — bug / feature / docs / refactor / infra / data / epic.
+- **work-type** — `bug` / `task` / `epic` (the shared org-wide core; same names as plant-family).
 - **Board Priority + Status** — set on the board card, **not** as labels. The board owns these; there
   are deliberately no `priority:*` labels and no `status:` labels for Backlog/In-Progress/Done/On-going
   (see [`project-board.md`](project-board.md) → "Division of labour").
@@ -28,7 +28,7 @@ family.
 
 ## New issue → done (the short version)
 
-1. New issue lands → `status:triage` + `pkg:*` + `type:*`.
+1. New issue lands → `status:triage` + `pkg:*` + a work-type (`bug`/`task`/`epic`).
 2. Triaged → set board **Priority** + board **Status = Backlog**; drop `status:triage`.
 3. Started → board **Status = In Progress**.
 4. Cross-package? → add `cross:*` and **link the partner issues in the other repos**. Use the

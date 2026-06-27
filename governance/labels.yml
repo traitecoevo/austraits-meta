@@ -1,29 +1,79 @@
 # labels.yml — AusTraits family label taxonomy (single source of truth)
 #
 # PROPOSED — awaiting maintainer sign-off before application.
-# Scope: AusTraits FAMILY only (not org-wide). Applied by apply-labels.sh to a hard-coded repo list.
+# Scope: AusTraits FAMILY only. Applied by apply-labels.sh to a hard-coded repo list.
 #
-# Axes (a label name's prefix is its axis):
-#   pkg:       which package/area the issue concerns (family-local; no cross-family `family:` axis,
-#              because board #9 is already family-scoped)
-#   type:      kind of work
-#   status:    ONLY the states the board does not own (triage/blocked/needs-info)
-#   cross:     cross-package signals (the whole reason this meta repo exists)
+# ORG CONSISTENCY (decided 2026-06-28): the work-type core uses the SAME names + descriptions as
+# plant-family board #5 (traitecoevo/plant et al.) so an issue reads the same across both families.
+# COLOURS: plant's current core colours are not intuitive (task and epic are both blues, hard to
+# tell apart). This file instead uses a conventional, distinct palette — bug=red, task=blue,
+# epic=purple (Jira-style). The intent is to converge BOTH families on this palette (i.e. update
+# plant to match), NOT to diverge. Confirm the palette before applying to either family.
 #
-# DIVISION OF LABOUR WITH BOARD #9 (decided 2026-06-28):
-#   Board single-select fields are the SOURCE OF TRUTH for Status (Backlog/In Progress/Done/
-#   On-going) and Priority (high/medium/low/no-plans). We deliberately do NOT mirror those as
-#   labels — labels and board fields don't auto-sync, so duplicating them only invites drift.
-#   Labels own what the board can't express: component (pkg:), kind (type:), cross-package impact
-#   (cross:), and the pre-board / out-of-band states (status:triage / blocked / needs-info).
+# Two tiers:
+#   ── ORG-SHARED CORE ──  identical (or recommended) across every traitecoevo family
+#        work-type:  bug / task / epic           (verbatim from plant #5)
+#        states:     status:triage / blocked / needs-info   (out-of-band, board can't express)
+#        community:  good first issue / help wanted / question / duplicate / invalid / wontfix
+#   ── MULTI-REPO PATTERN ──  same mechanism org-wide; each family supplies its OWN repos.
+#        pkg:*   one per family repo (austraits is multi-repo now; plant is heading there too)
+#        cross:* cross-package contract/ripple signals
+#        (Plus the board `Area` field (dev/data) and `[prefix]` issue titles for sub-areas — both
+#         shared org conventions, not labels. See governance/project-board.md.)
 #
-# Colours are grouped by axis so labels read at a glance:
-#   pkg:      blue family      (#1d76db core, lighter shades per package)
-#   type:     teal/green       (#0e8a16 etc.)
-#   status:   purple/amber
-#   cross:    orange (attention)
+# DIVISION OF LABOUR WITH THE BOARD (#9): board single-select fields own Status (Backlog/In Progress/
+# Done/On-going) and Priority. We do NOT mirror them as labels (they don't auto-sync -> drift). The
+# proposed "Area" field (dev/data) also lives on the board, mirroring plant #5's Area field — not a
+# label. Labels own only what the board can't: component (pkg:), kind (bug/task/epic), cross-package
+# impact (cross:), and the pre-board / out-of-band states (status:*).
 
 labels:
+
+  # ========================== ORG-SHARED CORE (== plant #5) ==========================
+
+  # ---- work-type: bug / task / epic (verbatim from traitecoevo/plant) -----------
+  - name: "bug"
+    color: "fc2929"
+    description: "Existing feature not functioning as intended"
+  - name: "task"
+    color: "84b6eb"
+    description: "A discrete task needed for a feature"
+  - name: "epic"
+    color: "0052cc"
+    description: "A new feature or capability"
+
+  # ---- status: ONLY out-of-band states the board doesn't own --------------------
+  - name: "status:triage"
+    color: "fef2c0"
+    description: "Needs triage — not yet assessed or placed on the board."
+  - name: "status:blocked"
+    color: "e99695"
+    description: "Blocked on another issue, repo, or external dependency (migrated from 'blocked')."
+  - name: "status:needs-info"
+    color: "d4c5f9"
+    description: "Waiting on reporter/maintainer for more information."
+
+  # ---- community (standard; some already exist in repos) ------------------------
+  - name: "good first issue"
+    color: "7057ff"
+    description: "Good for newcomers."
+  - name: "help wanted"
+    color: "008672"
+    description: "Maintainers would welcome help here."
+  - name: "question"
+    color: "d876e3"
+    description: "A question or request for clarification."
+  - name: "duplicate"
+    color: "cfd3d7"
+    description: "Already tracked elsewhere."
+  - name: "invalid"
+    color: "e4e669"
+    description: "Not actionable as reported."
+  - name: "wontfix"
+    color: "ffffff"
+    description: "Decided not to act on this."
+
+  # ===================== AUSTRAITS-FAMILY ADDITIONS (this family) =====================
 
   # ---- pkg: which repo (one per family-folder repo; blue family) ----------------
   # Pipeline core
@@ -76,40 +126,6 @@ labels:
     color: "9e9ac8"
     description: "ausinvertraits.build — sibling traits.build database (invertebrates)."
 
-  # ---- type: kind of work ------------------------------------------------------
-  - name: "type:bug"
-    color: "d73a4a"
-    description: "Something is broken or incorrect."
-  - name: "type:feature"
-    color: "0e8a16"
-    description: "New capability or enhancement."
-  - name: "type:docs"
-    color: "1d7b6e"
-    description: "Documentation, vignettes, README, book."
-  - name: "type:refactor"
-    color: "5319e7"
-    description: "Internal change with no user-facing behaviour change."
-  - name: "type:infra"
-    color: "455a64"
-    description: "CI, build, packaging, releases, tooling."
-  - name: "type:data"
-    color: "8a6d3b"
-    description: "Data content/curation: trait records, definitions, taxonomy entries."
-  - name: "type:epic"
-    color: "3e1f8c"
-    description: "Tracking/parent issue spanning multiple sub-issues (migrated from 'epic'; pairs with the board's Parent/Sub-issues fields)."
-
-  # ---- status: ONLY states board #9 doesn't own (Status field owns the rest) ----
-  - name: "status:triage"
-    color: "fef2c0"
-    description: "Needs triage — not yet assessed or placed on the board."
-  - name: "status:blocked"
-    color: "e99695"
-    description: "Blocked on another issue, repo, or external dependency (migrated from 'blocked')."
-  - name: "status:needs-info"
-    color: "d4c5f9"
-    description: "Waiting on reporter/maintainer for more information."
-
   # ---- cross: cross-package signals (the meta repo's reason to exist) -----------
   - name: "cross:breaking"
     color: "e11d21"
@@ -120,23 +136,3 @@ labels:
   - name: "cross:contract"
     color: "ff7f0e"
     description: "Touches a cross-boundary contract/artifact (APD vocab, schema, parquet, released .rds)."
-
-  # ---- community (uniform across the family; some already exist in repos) -------
-  - name: "good first issue"
-    color: "7057ff"
-    description: "Good for newcomers."
-  - name: "help wanted"
-    color: "008672"
-    description: "Maintainers would welcome help here."
-  - name: "question"
-    color: "d876e3"
-    description: "A question or request for clarification."
-  - name: "duplicate"
-    color: "cfd3d7"
-    description: "Already tracked elsewhere."
-  - name: "invalid"
-    color: "e4e669"
-    description: "Not actionable as reported."
-  - name: "wontfix"
-    color: "ffffff"
-    description: "Decided not to act on this."
