@@ -33,13 +33,13 @@ labels:
 
   # ---- work-type: bug / task / epic (verbatim from traitecoevo/plant) -----------
   - name: "bug"
-    color: "fc2929"
+    color: "d73a4a"          # red — defect (plant currently fc2929; converge to this)
     description: "Existing feature not functioning as intended"
   - name: "task"
-    color: "84b6eb"
+    color: "0075ca"          # blue — discrete work (plant currently 84b6eb light-blue)
     description: "A discrete task needed for a feature"
   - name: "epic"
-    color: "0052cc"
+    color: "6f42c1"          # purple — big feature/capability (plant currently 0052cc blue)
     description: "A new feature or capability"
 
   # ---- status: ONLY out-of-band states the board doesn't own --------------------
