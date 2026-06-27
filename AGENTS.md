@@ -31,15 +31,15 @@ nothing here applies to them.
 | `austraits` | R package | The user-facing **access/wrangle API** for `traits.build`-format databases (incl. AusTraits). |
 | `austraits-meta` | this repo | Cross-package knowledge + governance (labels, board, playbooks). |
 
-**Other family repos** (in scope for the family/board #9, but not the pipeline core): `traits.build-book`,
-`traits.build-template`, `austraits-api`, `austraits-api-nectar`, `austraits.org`, `austraits.portal`,
-`APCalign-app`, and sibling traits.build databases `AusFizz` and `ausinvertraits.build`.
+**Other family repos** (in scope for the family/board #9 and for governance, but not pipeline core):
+`traits.build-book`, `traits.build-template`, `austraits-api`, `austraits-api-nectar`, `austraits.org`,
+`austraits.portal`, `APCalign-app`, and sibling traits.build databases `AusFizz` and
+`ausinvertraits.build`.
 
-> **Open question (flagged for maintainers):** the governance label list (`governance/labels.yml`,
-> `governance/apply-labels.sh`) currently targets only the five core repos
-> (`traits.build`, `APCalign`, `austraits`, `APD`, `austraits-meta`). **`austraits.build` is the
-> central pipeline node** and is arguably the most important repo to label. See `governance/triage.md`
-> → "Scope decisions still needed".
+> **Governance scope (decided 2026-06-28):** the label taxonomy applies to **every git repo in the
+> austraits-family folder** — all of the above plus the pipeline core, including `austraits.build`.
+> `governance/labels.yml` carries a `pkg:` label per repo and `governance/apply-labels.sh` targets the
+> full explicit list. It is still scoped to the family ONLY (never org-wide).
 
 ---
 

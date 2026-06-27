@@ -51,25 +51,21 @@ family.
 
 ---
 
-## Scope decisions still needed (open questions for maintainers)
+## Scope decisions
 
-These are flagged rather than guessed — please decide:
+**Decided 2026-06-28 — governance covers the whole family folder.** The label taxonomy applies to
+**every git repo in the austraits-family folder**: pipeline core (`APD`, `APCalign`, `traits.build`,
+`austraits.build`, `austraits`, `austraits-meta`), docs/scaffolding (`traits.build-book`,
+`traits.build-template`), apps/API/web (`APCalign-app`, `austraits-api`, `austraits-api-nectar`,
+`austraits.org`, `austraits.portal`), and sibling databases (`AusFizz`, `ausinvertraits.build`).
+Each repo has its own `pkg:*` label and is listed explicitly in `apply-labels.sh`. Still
+family-scoped — never org-wide.
 
-1. **Does the label taxonomy apply to `austraits.build`?** It is the **central pipeline node** (the glue
-   that wires APD + APCalign + the engine and produces the released `.rds`), but the task-defined core
-   list — and therefore `apply-labels.sh` and `labels.yml`'s `pkg:*` set — currently treats it as a
-   separate concern. A `pkg:austraits-build` label **exists** in `labels.yml`, but `austraits.build` is
-   **not** in `apply-labels.sh`'s target list. Recommendation: **add it.** To do so, append
-   `traitecoevo/austraits.build` to `FAMILY_REPOS` in `apply-labels.sh`.
+### Still open for maintainers
 
-2. **Do the API / book / website / app repos get the family labels?** Board #9 covers `austraits-api`,
-   `traits.build-book`, `austraits.org`, `austraits.portal`, `APCalign-app`. They are family members but
-   not pipeline-core. Decide whether they should carry the same taxonomy (and gain `pkg:*` entries).
-
-3. **Sibling traits.build databases** (`AusFizz`, `ausinvertraits.build`) are on board #9 and depend on
-   the `traits.build` engine + APD. Do they get `pkg:*` labels, or a generic `pkg:traits-build-db`?
-
-4. **Board config fixes** — `Done` vs `-Done`, and the `low prioirity` typo (see `project-board.md`).
-
-5. **Default labels** — GitHub seeds repos with `bug`/`enhancement`/etc. Decide whether to delete them
+1. **Board config fixes** — `Done` vs `-Done`, and the `low prioirity` typo (see `project-board.md`).
+2. **Default labels** — GitHub seeds repos with `bug`/`enhancement`/etc. Decide whether to delete them
    in favour of this taxonomy (the script does NOT delete; see its footer).
+3. **`pkg:` granularity** — currently one label per repo (1:1 with the apply list). If that is too noisy
+   on peripheral repos, consider grouping (e.g. fold `pkg:austraits-api-nectar` into `pkg:austraits-api`,
+   or `pkg:austraits-org`/`pkg:austraits-portal` into a single `pkg:austraits-web`).

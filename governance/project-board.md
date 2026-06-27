@@ -67,6 +67,6 @@ two don't drift:
 - [ ] Confirm/repair the `Done` vs `-Done` and `low prioirity` board options.
 - [ ] Confirm the triage workflow above (or replace with the real one).
 - [ ] Decide whether label ↔ board-Status syncing should be automated.
-- [ ] Decide whether `austraits.build` (and the API/book/website repos) carry the same labels — see
-      `triage.md` → "Scope decisions still needed".
+- [x] ~~Decide whether `austraits.build` (and the API/book/website repos) carry the same labels~~ —
+      **Decided 2026-06-28: yes, the whole family folder.** See `triage.md` → "Scope decisions".
 - [ ] Decide a default board view/grouping convention (by Repository? by Status? by Priority?).

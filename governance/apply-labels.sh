@@ -21,16 +21,29 @@
 set -euo pipefail
 
 # --- The hard-coded family repo list (edit deliberately; never auto-generate) ----------------
+# Scope = every git repo in the local austraits-family folder (confirmed family members, per
+# board #9). NOT the whole org. Keep this list explicit; never `gh repo list traitecoevo`.
 FAMILY_REPOS=(
+  # pipeline core
   traitecoevo/traits.build
   traitecoevo/APCalign
   traitecoevo/austraits
   traitecoevo/APD
+  traitecoevo/austraits.build
   traitecoevo/austraits-meta
+  # docs / scaffolding
+  traitecoevo/traits.build-book
+  traitecoevo/traits.build-template
+  # apps / API / web
+  traitecoevo/APCalign-app
+  traitecoevo/austraits-api
+  traitecoevo/austraits-api-nectar
+  traitecoevo/austraits.org
+  traitecoevo/austraits.portal
+  # sibling traits.build databases
+  traitecoevo/AusFizz
+  traitecoevo/ausinvertraits.build
 )
-# NOTE: austraits.build is the central pipeline node but is intentionally NOT here yet —
-# its inclusion is an open governance decision (see governance/triage.md). To add it, append:
-#   traitecoevo/austraits.build
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LABELS_YML="${SCRIPT_DIR}/labels.yml"

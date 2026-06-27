@@ -20,7 +20,8 @@
 
 labels:
 
-  # ---- pkg: which package -------------------------------------------------------
+  # ---- pkg: which repo (one per family-folder repo; blue family) ----------------
+  # Pipeline core
   - name: "pkg:apd"
     color: "0b3d91"
     description: "APD — the AusTraits Plant Dictionary (trait vocabulary/contract)."
@@ -39,6 +40,36 @@ labels:
   - name: "pkg:meta"
     color: "c5d9f1"
     description: "austraits-meta — cross-package knowledge & governance."
+  # Docs / scaffolding
+  - name: "pkg:traits-build-book"
+    color: "2b8cbe"
+    description: "traits.build-book — the traits.build manual."
+  - name: "pkg:traits-build-template"
+    color: "74a9cf"
+    description: "traits.build-template — starter template for new traits.build databases."
+  # Apps / API / web
+  - name: "pkg:apcalign-app"
+    color: "3690c0"
+    description: "APCalign-app — Shiny app for APCalign."
+  - name: "pkg:austraits-api"
+    color: "045a8d"
+    description: "austraits-api — HTTP API over AusTraits."
+  - name: "pkg:austraits-api-nectar"
+    color: "0570b0"
+    description: "austraits-api-nectar — API deployment (Nectar)."
+  - name: "pkg:austraits-org"
+    color: "238b45"
+    description: "austraits.org — project website."
+  - name: "pkg:austraits-portal"
+    color: "41ab5d"
+    description: "austraits.portal — data portal."
+  # Sibling traits.build databases
+  - name: "pkg:ausfizz"
+    color: "807dba"
+    description: "AusFizz — sibling traits.build database."
+  - name: "pkg:ausinvertraits-build"
+    color: "9e9ac8"
+    description: "ausinvertraits.build — sibling traits.build database (invertebrates)."
 
   # ---- type: kind of work ------------------------------------------------------
   - name: "type:bug"
