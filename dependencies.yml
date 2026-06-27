@@ -1,0 +1,180 @@
+# dependencies.yml
+# Machine-readable cross-package graph for the AusTraits family.
+#
+# Two edge kinds, deliberately separated because they point opposite ways:
+#   - r_imports / r_depends : install-time R package graph
+#   - data_consumes         : build/run-time artifact flow (how the dataset is made & used)
+#
+# DRIFT CAVEAT: hand-maintained. Verify edges against each repo before relying on them.
+# See AGENTS.md for the narrative version.
+
+meta:
+  family: austraits
+  org: traitecoevo
+  board: https://github.com/orgs/traitecoevo/projects/9
+  scope_note: >
+    AusTraits family only. Does NOT apply org-wide or to other families (e.g. plant).
+  last_reviewed: 2026-06-28
+
+packages:
+
+  APD:
+    repo: traitecoevo/APD
+    kind: quarto-compendium          # not an installable R library
+    role: Trait vocabulary / dictionary (the contract)
+    source_of_truth_for:
+      - trait definitions
+      - allowed categorical values
+      - units
+      - trait URIs (https://w3id.org/APD/traits/trait_XXXXX)
+    default_branch: develop
+    r_imports: []
+    r_depends: []
+    data_consumes: []                # consumes external/authored inputs only
+    produces:
+      - APD_traits.csv
+      - APD_categorical_values.csv
+      - data/APD_trait_hierarchy.csv
+      - APD.ttl
+      - APD.json
+      - APD.nq
+      - APD.nt
+      - APD_triples.csv
+      - APD trait URIs (w3id.org/APD)
+
+  APCalign:
+    repo: traitecoevo/APCalign
+    kind: r-package                  # on CRAN
+    role: Plant taxonomy alignment (APC/APNI) + native/introduced status
+    source_of_truth_for:
+      - current accepted plant names
+      - synonym resolution
+      - native/introduced status by state
+    default_branch: master
+    r_imports: []
+    r_depends: []
+    data_consumes:
+      - external: Australian Plant Census (APC) + APNI
+    produces:
+      - apc.<date>.parquet   # published on APCalign GitHub releases
+      - apni.<date>.parquet
+
+  traits.build:
+    repo: traitecoevo/traits.build
+    kind: r-package
+    role: Generic workflow engine + relational data model/schema for trait harmonisation
+    source_of_truth_for:
+      - relational data model / schema (inst/support/traits.build_schema.yml)
+      - the harmonisation workflow
+    default_branch: master
+    # NOTE reversed-looking edge: the ENGINE imports helpers from the ACCESS package.
+    r_imports:
+      - package: austraits
+        functions: [convert_list_to_df1, convert_list_to_df2, convert_df_to_list, bind_databases, flatten_database]
+        note: deprecated aliases re-exported; see traits.build/R/utils.R + NAMESPACE
+    r_depends: []
+    data_consumes: []
+    produces:
+      - traits.build_schema.yml      # authored, packaged in inst/support/
+      - ontology/output/traits.build.{ttl,json,nt,nq}   # data-model ontology, NOT APD
+
+  austraits.build:
+    repo: traitecoevo/austraits.build
+    kind: compendium
+    role: The actual AusTraits dataset compilation (the glue node)
+    source_of_truth_for:
+      - the AusTraits dataset (which sources, which version)
+    default_branch: develop
+    flagged: >
+      Central pipeline node but NOT in the governance label list (core 5). See governance/triage.md.
+    r_imports: []
+    r_depends:
+      - package: traits.build
+        version: ">= 2.1.0"
+    data_consumes:
+      - from: APD
+        artifacts: [APD_traits.csv, APD_categorical_values.csv, data/APD_trait_hierarchy.csv]
+        via: scripts/build_traits_yml_from_APD.R   # -> config/traits.yml
+      - from: APCalign
+        artifacts: [apc.<date>.parquet, apni.<date>.parquet]
+        via: taxonomic alignment during build
+      - engine: traits.build           # assembled using the traits.build workflow
+    produces:
+      - austraits-<X.Y.Z>.rds          # published on Zenodo (record 3568418)
+
+  austraits:
+    repo: traitecoevo/austraits
+    kind: r-package
+    role: User-facing access / wrangling API for traits.build-format databases
+    source_of_truth_for:
+      - access/wrangle API (load, filter, join, flatten, plot)
+    default_branch: master
+    r_imports: []
+    r_depends: []
+    data_consumes:
+      - from: austraits.build (via Zenodo)
+        artifacts: [austraits-<X.Y.Z>.rds]
+        via: load_austraits()  # Zenodo record 3568418
+    produces:
+      - austraits package functions
+    assumes:
+      - Taxonomy already aligned by APCalign during austraits.build; austraits does NOT re-align.
+
+  austraits-meta:
+    repo: traitecoevo/austraits-meta
+    kind: governance
+    role: This repo — cross-package knowledge + governance
+    default_branch: main
+    r_imports: []
+    r_depends: []
+    data_consumes: []
+    produces:
+      - dependencies.yml
+      - governance/*
+
+# Related family repos (in board #9 scope, outside the pipeline core / label list as drawn today).
+related_repos:
+  traits.build-book:    {repo: traitecoevo/traits.build-book,    role: traits.build manual}
+  traits.build-template:{repo: traitecoevo/traits.build-template, role: starter template for new traits.build databases}
+  austraits-api:        {repo: traitecoevo/austraits-api,        role: HTTP API over AusTraits}
+  austraits-api-nectar: {repo: traitecoevo/austraits-api-nectar, role: API deployment (Nectar)}
+  austraits.org:        {repo: traitecoevo/austraits.org,        role: project website}
+  austraits.portal:     {repo: traitecoevo/austraits.portal,     role: data portal}
+  APCalign-app:         {repo: traitecoevo/APCalign-app,         role: Shiny app for APCalign}
+  AusFizz:              {repo: traitecoevo/AusFizz,              role: sibling traits.build database}
+  ausinvertraits.build: {repo: traitecoevo/ausinvertraits.build, role: sibling traits.build database (invertebrates)}
+
+# Cross-boundary artifacts (producer -> consumer). authored = hand-edited; generated = built by code.
+cross_boundary_artifacts:
+  - artifact: APD_traits.csv
+    producer: APD
+    consumer: austraits.build
+    nature: generated (from APD_traits_input.csv via build.qmd)
+  - artifact: APD_categorical_values.csv
+    producer: APD
+    consumer: austraits.build
+    nature: generated
+  - artifact: data/APD_trait_hierarchy.csv
+    producer: APD
+    consumer: austraits.build
+    nature: authored
+  - artifact: APD trait URIs (w3id.org/APD/traits/...)
+    producer: APD
+    consumer: [traits.build (schema/configs/tests), austraits (docs), the built database]
+    nature: generated (the vocabulary contract)
+  - artifact: apc.<date>.parquet / apni.<date>.parquet
+    producer: APCalign (GitHub releases)
+    consumer: [APCalign::load_taxonomic_resources, austraits.build]
+    nature: generated (versioned, pinned by consumers)
+  - artifact: config/traits.yml
+    producer: austraits.build (from APD)
+    consumer: austraits.build pipeline (traits.build engine)
+    nature: generated (build_traits_yml_from_APD.R)
+  - artifact: austraits-<X.Y.Z>.rds
+    producer: austraits.build (-> Zenodo)
+    consumer: austraits::load_austraits()
+    nature: generated (the released dataset)
+  - artifact: traits.build_schema.yml
+    producer: traits.build
+    consumer: traits.build::get_schema() and every traits.build database
+    nature: authored

@@ -1,0 +1,120 @@
+# labels.yml — AusTraits family label taxonomy (single source of truth)
+#
+# PROPOSED — awaiting maintainer sign-off before application.
+# Scope: AusTraits FAMILY only (not org-wide). Applied by apply-labels.sh to a hard-coded repo list.
+#
+# Axes (a label name's prefix is its axis):
+#   pkg:       which package/area the issue concerns (family-local; no cross-family `family:` axis,
+#              because board #9 is already family-scoped)
+#   type:      kind of work
+#   priority:  urgency — aligned to board #9's Priority field (high / medium / low / no-plans)
+#   status:    triage/workflow state — aligned to board #9's Status field
+#   cross:     cross-package signals (the whole reason this meta repo exists)
+#
+# Colours are grouped by axis so labels read at a glance:
+#   pkg:      blue family      (#1d76db core, lighter shades per package)
+#   type:     teal/green       (#0e8a16 etc.)
+#   priority: red->grey ramp
+#   status:   purple/amber
+#   cross:    orange (attention)
+
+labels:
+
+  # ---- pkg: which package -------------------------------------------------------
+  - name: "pkg:apd"
+    color: "0b3d91"
+    description: "APD — the AusTraits Plant Dictionary (trait vocabulary/contract)."
+  - name: "pkg:apcalign"
+    color: "1d56b0"
+    description: "APCalign — taxonomy alignment (APC/APNI)."
+  - name: "pkg:traits-build"
+    color: "1d76db"
+    description: "traits.build — workflow engine + data model/schema."
+  - name: "pkg:austraits-build"
+    color: "5390d9"
+    description: "austraits.build — the AusTraits dataset compilation (glue node)."
+  - name: "pkg:austraits"
+    color: "7fb2e8"
+    description: "austraits — user-facing access/wrangle R package."
+  - name: "pkg:meta"
+    color: "c5d9f1"
+    description: "austraits-meta — cross-package knowledge & governance."
+
+  # ---- type: kind of work ------------------------------------------------------
+  - name: "type:bug"
+    color: "d73a4a"
+    description: "Something is broken or incorrect."
+  - name: "type:feature"
+    color: "0e8a16"
+    description: "New capability or enhancement."
+  - name: "type:docs"
+    color: "1d7b6e"
+    description: "Documentation, vignettes, README, book."
+  - name: "type:refactor"
+    color: "5319e7"
+    description: "Internal change with no user-facing behaviour change."
+  - name: "type:infra"
+    color: "455a64"
+    description: "CI, build, packaging, releases, tooling."
+  - name: "type:data"
+    color: "8a6d3b"
+    description: "Data content/curation: trait records, definitions, taxonomy entries."
+
+  # ---- priority: aligned to board #9 Priority field ----------------------------
+  - name: "priority:high"
+    color: "b60205"
+    description: "High priority — do soon."
+  - name: "priority:medium"
+    color: "fbca04"
+    description: "Medium priority."
+  - name: "priority:low"
+    color: "c2e0c6"
+    description: "Low priority — nice to have."
+  - name: "priority:no-plans"
+    color: "cccccc"
+    description: "Acknowledged but no current plans to implement (board: 'no plans to implement')."
+
+  # ---- status: triage/workflow, aligned to board #9 Status field ---------------
+  - name: "status:triage"
+    color: "fef2c0"
+    description: "Needs triage — not yet assessed or placed on the board."
+  - name: "status:backlog"
+    color: "ededed"
+    description: "Accepted, not yet started (board: Backlog)."
+  - name: "status:in-progress"
+    color: "0052cc"
+    description: "Actively being worked on (board: In Progress)."
+  - name: "status:ongoing"
+    color: "6f42c1"
+    description: "Recurring/maintenance work with no single completion (board: On-going)."
+  - name: "status:blocked"
+    color: "e99695"
+    description: "Blocked on another issue, repo, or external dependency."
+  - name: "status:needs-info"
+    color: "d4c5f9"
+    description: "Waiting on reporter/maintainer for more information."
+
+  # ---- cross: cross-package signals (the meta repo's reason to exist) -----------
+  - name: "cross:breaking"
+    color: "e11d21"
+    description: "Breaking change with downstream impact across packages (e.g. APD vocabulary change)."
+  - name: "cross:ripple"
+    color: "fb8c00"
+    description: "Requires coordinated changes/rebuilds in more than one family repo."
+  - name: "cross:contract"
+    color: "ff7f0e"
+    description: "Touches a cross-boundary contract/artifact (APD vocab, schema, parquet, released .rds)."
+
+  # ---- community (uniform across the family) -----------------------------------
+  - name: "good first issue"
+    color: "7057ff"
+    description: "Good for newcomers."
+  - name: "help wanted"
+    color: "008672"
+    description: "Maintainers would welcome help here."
+  - name: "duplicate"
+    color: "cfd3d7"
+    description: "Already tracked elsewhere."
+  - name: "wontfix"
+    color: "ffffff"
+    description: "Decided not to act on this."
