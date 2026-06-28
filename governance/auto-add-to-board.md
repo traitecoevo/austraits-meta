@@ -27,7 +27,7 @@ project write access, stored as a secret:
    - **Fine-grained PAT** (recommended): organization permissions → *Projects: Read and write*; or
    - **Classic PAT**: `project` scope; or
    - a **GitHub App** installation token with Projects read/write.
-2. Add it as an **organization secret** named `ADD_TO_PROJECT`, scoped to the family repos
+2. Add it as an **organization secret** named `ADD_TO_PROJECT_PAT`, scoped to the family repos
    (Org → Settings → Secrets and variables → Actions → New organization secret). An org secret means
    you set the token **once** for all repos instead of per-repo.
 
@@ -48,7 +48,7 @@ jobs:
       - uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/orgs/traitecoevo/projects/9
-          github-token: ${{ secrets.ADD_TO_PROJECT }}
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
 ```
 
 Notes:
@@ -61,4 +61,4 @@ Notes:
 ## Rollout
 
 Added to all 15 family repos via draft PRs on branch `ci/auto-add-to-board` (see the meta-repo
-bootstrap summary for links). **Set `ADD_TO_PROJECT` first, then merge.**
+bootstrap summary for links). **Set `ADD_TO_PROJECT_PAT` first, then merge.**
