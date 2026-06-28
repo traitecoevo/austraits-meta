@@ -71,8 +71,9 @@ Each is listed explicitly in `apply-labels.sh`. Still family-scoped — never or
   `wontfix` (comment on close instead). No `triage` label (no-Status = triage queue).
 - **Board Status** — deleted unused `-Done`; kept `Backlog/In Progress/Done/On-going`.
 
-### Still open for maintainers
+### Done
 
-1. **Board Priority typo** — `low prioirity` (rename the option in the UI; preserves assignments).
-2. **Default labels** — any leftover repo-local labels not in the taxonomy (`documentation`,
-   `coming soon!`, etc.) — keep or delete deliberately (the script does NOT delete them).
+- Board Priority typo `low prioirity` → `low priority` (fixed 2026-06-28, assignments preserved).
+- Leftover labels `documentation` (family-wide), `documentation 📝` and `coming soon! 👀` (austraits)
+  deleted. Remaining repo-local customs kept: `new trait suggestion` (APD), `data submissions`
+  (austraits.build).

@@ -26,11 +26,9 @@ family-local and there is no cross-family `family:` axis.
 `Backlog`, `In Progress`, `Done`, `On-going` — matches plant #5 plus `On-going`. (The legacy `-Done`
 option was deleted 2026-06-28.) New issues land with **no Status** = the triage queue.
 
-### Priority options (live, verbatim)
-`high priority`, `medium priority`, `low prioirity` *(sic — typo)*, `no plans to implement`
-
-> ⚠️ `low prioirity` is misspelled in the board config. **TODO (maintainer):** fix the typo (renaming a
-> single-select option preserves existing assignments).
+### Priority options
+`high priority`, `medium priority`, `low priority`, `no plans to implement`
+(The `low prioirity` typo was fixed 2026-06-28, preserving assignments.)
 
 ## Division of labour: labels vs board fields (decided 2026-06-28)
 
@@ -86,7 +84,7 @@ shows up in other repos (e.g. APD content). Create it on the board, then add sav
 ## TODOs for maintainers to define
 
 - [ ] Add a saved **"🔍 Triage"** board view (filter: Status is empty).
-- [ ] Fix the `low prioirity` Priority option typo (rename in the UI; preserves assignments).
+- [x] ~~Fix the `low prioirity` Priority option typo~~ — done 2026-06-28.
 - [ ] Confirm the triage workflow above (or replace with the real one).
 - [x] ~~Decide whether `austraits.build` (and the API/book/website repos) carry the same labels~~ —
       **Decided 2026-06-28: yes, the whole family folder.** See `triage.md` → "Scope decisions".
