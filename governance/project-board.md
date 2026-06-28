@@ -22,11 +22,9 @@ family-local and there is no cross-family `family:` axis.
 | **Priority** | single-select | options below |
 | Labels | built-in (mirrors repo labels) | this is where `governance/labels.yml` surfaces |
 
-### Status options (live, verbatim)
-`Backlog`, `In Progress`, `Done`, `On-going`, `-Done`
-
-> ⚠️ `Done` and `-Done` both exist — `-Done` looks like a legacy/archive duplicate. **TODO (maintainer):**
-> confirm intended meaning or consolidate.
+### Status options
+`Backlog`, `In Progress`, `Done`, `On-going` — matches plant #5 plus `On-going`. (The legacy `-Done`
+option was deleted 2026-06-28.) New issues land with **no Status** = the triage queue.
 
 ### Priority options (live, verbatim)
 `high priority`, `medium priority`, `low prioirity` *(sic — typo)*, `no plans to implement`
@@ -46,8 +44,9 @@ set the board field, and vice versa. Rather than mirror them (which drifts), we 
 | Which **repo** | **Board `Repository` field** | Automatic per item. **No `pkg:` labels** — they just duplicated this and cluttered every repo's picker. |
 | Which **sub-area within a repo** | **`[prefix]` in the issue title** | Org convention from plant #5 (e.g. `[env drivers] ...`, `[schema] ...`). Lightweight; good for modules inside one repo. |
 | Kind of work | **`bug` / `task` / `epic` labels** | Shared org-wide core (== plant #5). `epic` pairs with the board's native Parent/Sub-issues fields. |
-| Cross-package impact | `cross:*` labels | No board column; the signal this meta repo exists to track. |
-| Pre-board / out-of-band states | `status:triage` / `status:blocked` / `status:needs-info` | The only `status:` labels — they express what the board's Status column can't. |
+| Triage queue | **no board Status** | A new issue with no Status set *is* the triage queue. No `triage` label. A saved "🔍 Triage" view filters Status = empty. |
+| Orthogonal flags | `blocked` / `needs-info` | Bare labels (not `status:`) — they coexist with any board Status. |
+| Cross-package impact | `cross-package` / `breaking` | No board column. `cross-package` = ripples beyond this repo; `breaking` = dependents must change. |
 
 ### Grouping — `Repository` + `[prefix]` titles (both families)
 
@@ -76,19 +75,19 @@ shows up in other repos (e.g. APD content). Create it on the board, then add sav
 
 ## Triage workflow (proposed — needs maintainer confirmation)
 
-1. **New issue** → auto-added to board #9 (see [`auto-add-to-board.md`](auto-add-to-board.md)); gets
-   `status:triage` + a work-type (`bug` / `task` / `epic`) label.
-2. **Triaged** → set board **Priority** + board **Status = Backlog**; remove `status:triage`.
+1. **New issue** → auto-added to board #9 (see [`auto-add-to-board.md`](auto-add-to-board.md)) with
+   **no Status** (= triage queue); add a work-type (`bug` / `task` / `epic`) label.
+2. **Triaged** → set board **Priority** + board **Status = Backlog**.
 3. **Started** → board **Status = In Progress**, assignee set.
-4. **Cross-package** → add `cross:ripple` / `cross:breaking` / `cross:contract` and link the issues in
-   the other affected repos (see `release-playbooks.md`).
-5. **Done** → board **Status = Done**, issue closed.
+4. **Cross-package** → add `cross-package` (+ `breaking` if dependents must change) and link the issues
+   in the other affected repos (see `release-playbooks.md`).
+5. **Done** → board **Status = Done**, issue closed (comment the resolution rather than labelling it).
 
 ## TODOs for maintainers to define
 
-- [ ] Confirm/repair the `Done` vs `-Done` and `low prioirity` board options.
+- [ ] Add a saved **"🔍 Triage"** board view (filter: Status is empty).
+- [ ] Fix the `low prioirity` Priority option typo (rename in the UI; preserves assignments).
 - [ ] Confirm the triage workflow above (or replace with the real one).
-- [ ] Decide whether label ↔ board-Status syncing should be automated.
 - [x] ~~Decide whether `austraits.build` (and the API/book/website repos) carry the same labels~~ —
       **Decided 2026-06-28: yes, the whole family folder.** See `triage.md` → "Scope decisions".
 - [x] ~~Decide a default board view/grouping convention~~ — **add `Area` field (dev/data) + saved

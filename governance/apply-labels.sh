@@ -100,23 +100,24 @@ $APPLY || echo $'\n*** DRY RUN — nothing will change. Re-run with --apply to s
 echo
 
 # --- Migration map: rename existing labels in place so already-tagged issues carry over -------
-# Applied per repo ONLY when the OLD label exists and the NEW one does not. Includes austraits'
-# emoji-suffixed variants. After a rename, phase 2 (--force create) fixes colour/description.
-# Core (bug/epic) keep their names — they're already correct; phase 2 just restyles colour/desc.
-# enhancement -> task (most enhancement issues are discrete work; re-tag the few true epics by hand).
-# 'documentation', 'coming soon!', 'new trait suggestion', 'data submissions' are NOT mapped — left
-# as repo-local labels (re-tag doc issues as 'task' manually if you want plant-style minimalism).
+# Applied per repo ONLY when the OLD label exists and the NEW one does not. After a rename, phase 2
+# (--force create) fixes colour/description. bug/epic keep their names (phase 2 restyles them).
+# enhancement -> task (most are discrete work; re-tag true epics by hand). Includes austraits' emoji
+# variants and the interim status:/cross: names used during earlier iterations.
 RENAME_MAP=(
   "enhancement=>task"
-  "blocked=>status:blocked"
   "bug 🐛=>bug"
   "enhancement ✨=>task"
   "question 🙋=>question"
-  "wontfix 🦉=>wontfix"
+  "status:blocked=>blocked"
+  "status:needs-info=>needs-info"
+  "cross:breaking=>breaking"
 )
-# Trimmed (not in the taxonomy): good first issue, help wanted, duplicate — and their emoji
-# variants are intentionally NOT remapped. apply-labels.sh does not delete; to remove them use:
-#   gh label delete "good first issue" --repo traitecoevo/<repo> --yes   (done across the family)
+# Trimmed — NOT in the taxonomy and NOT remapped (apply-labels.sh does not delete): good first issue,
+# help wanted, duplicate, invalid, wontfix, status:triage (triage = no board Status), cross:ripple,
+# cross:contract (folded into cross-package). Repo-local leftovers (documentation, coming soon!,
+# new trait suggestion, data submissions) are left alone. Delete unwanted ones deliberately, e.g.:
+#   gh label delete "wontfix" --repo traitecoevo/<repo> --yes
 
 for repo in "${REPOS[@]}"; do
   echo "==> $repo"

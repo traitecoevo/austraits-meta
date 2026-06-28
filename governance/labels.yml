@@ -1,80 +1,55 @@
 # labels.yml — AusTraits family label taxonomy (single source of truth)
 #
-# PROPOSED — awaiting maintainer sign-off before application.
 # Scope: AusTraits FAMILY only. Applied by apply-labels.sh to a hard-coded repo list.
 #
-# ORG CONSISTENCY (decided 2026-06-28): the work-type core uses the SAME names + descriptions as
-# plant-family board #5 (traitecoevo/plant et al.) so an issue reads the same across both families.
-# COLOURS: plant's current core colours are not intuitive (task and epic are both blues, hard to
-# tell apart). This file instead uses a conventional, distinct palette — bug=red, task=blue,
-# epic=purple (Jira-style). The intent is to converge BOTH families on this palette (i.e. update
-# plant to match), NOT to diverge. Confirm the palette before applying to either family.
+# Deliberately SMALL — 8 labels. The guiding rule: a label only exists for what the BOARD can't
+# express. The board (#9) owns the linear workflow and metadata; labels own the orthogonal stuff.
 #
-# Two tiers (deliberately SMALL — 12 labels):
-#   ── ORG-SHARED CORE ──  identical (or recommended) across every traitecoevo family
-#        work-type:  bug / task / epic           (same names/descriptions as plant #5)
-#        states:     status:triage / blocked / needs-info   (out-of-band, board can't express)
-#        community:  question / invalid / wontfix
-#   ── AUSTRAITS-FAMILY ──  cross-package signals
-#        cross:*  cross-package contract/ripple signals (this family is tightly coupled)
+# ORG CONSISTENCY: the work-type core (bug/task/epic) uses the same names + descriptions as
+# plant-family board #5, so an issue reads the same across both families. Colours are a conventional,
+# distinct palette (bug=red, task=blue, epic=purple) — plant's current colours aren't intuitive
+# (task & epic both blue); intent is to converge plant onto this palette too.
 #
-# NO pkg: labels (dropped 2026-06-28). "Which repo" is the board's `Repository` field (automatic);
-# "which sub-area" is a `[prefix]` in the issue title; "cross-package impact" is cross:*. A pkg:
-# label per repo just duplicated the Repository field and cluttered every repo's picker. This also
-# matches plant-family, which uses no pkg: labels.
+# WHAT THE BOARD OWNS (not labels — they don't auto-sync, so mirroring drifts):
+#   * Status  : Backlog / In Progress / Done / On-going  (new issues land with NO status = the
+#               "triage" queue; triaging sets Priority + moves to Backlog. There is NO triage label.)
+#   * Priority: high / medium / low / no-plans
+#   * Area    : dev / data  (cross-cutting cut, mirrors plant #5's Area field)
+#   * Which repo : the board's Repository field (so there are NO pkg: labels)
+#   * Sub-area within a repo : a `[prefix]` in the issue title (e.g. `[schema] ...`)
 #
-# DIVISION OF LABOUR WITH THE BOARD (#9): board single-select fields own Status (Backlog/In Progress/
-# Done/On-going), Priority, and the `Area` field (dev/data, mirroring plant #5). We do NOT mirror any
-# of them as labels (they don't auto-sync -> drift). Labels own only what the board can't: kind
-# (bug/task/epic), cross-package impact (cross:), and out-of-band states (status:*).
+# See governance/project-board.md and governance/triage.md.
 
 labels:
 
-  # ========================== ORG-SHARED CORE (== plant #5) ==========================
-
-  # ---- work-type: bug / task / epic (verbatim from traitecoevo/plant) -----------
+  # ---- work-type (shared org core; same names/descriptions as plant #5) ---------
   - name: "bug"
-    color: "d73a4a"          # red — defect (plant currently fc2929; converge to this)
+    color: "d73a4a"          # red — defect
     description: "Existing feature not functioning as intended"
   - name: "task"
-    color: "0075ca"          # blue — discrete work (plant currently 84b6eb light-blue)
+    color: "0075ca"          # blue — discrete work
     description: "A discrete task needed for a feature"
   - name: "epic"
-    color: "6f42c1"          # purple — big feature/capability (plant currently 0052cc blue)
+    color: "6f42c1"          # purple — big feature/capability
     description: "A new feature or capability"
 
-  # ---- status: ONLY out-of-band states the board doesn't own --------------------
-  - name: "status:triage"
-    color: "fef2c0"
-    description: "Needs triage — not yet assessed or placed on the board."
-  - name: "status:blocked"
+  # ---- orthogonal flags (coexist with any board Status; bare, not status:*) -----
+  - name: "blocked"
     color: "e99695"
-    description: "Blocked on another issue, repo, or external dependency (migrated from 'blocked')."
-  - name: "status:needs-info"
+    description: "Blocked on another issue, repo, or external dependency."
+  - name: "needs-info"
     color: "d4c5f9"
     description: "Waiting on reporter/maintainer for more information."
 
-  # ---- community (trimmed 2026-06-28 — dropped good first issue / help wanted /
-  #      duplicate as not useful for this org) ----------------------------------
+  # ---- community ----------------------------------------------------------------
   - name: "question"
     color: "d876e3"
     description: "A question or request for clarification."
-  - name: "invalid"
-    color: "e4e669"
-    description: "Not actionable as reported."
-  - name: "wontfix"
-    color: "ffffff"
-    description: "Decided not to act on this."
 
-  # ===================== AUSTRAITS-FAMILY (this family) =====================
-
-  # ---- cross: cross-package signals (the meta repo's reason to exist) -----------
-  - name: "cross:breaking"
-    color: "e11d21"
-    description: "Breaking change with downstream impact across packages (e.g. APD vocabulary change)."
-  - name: "cross:ripple"
+  # ---- cross-package signals (the meta repo's reason to exist) ------------------
+  - name: "cross-package"
     color: "fb8c00"
-    description: "Requires coordinated changes/rebuilds in more than one family repo."
-  - name: "cross:contract"
-    color: "ff7f0e"
-    description: "Touches a cross-boundary contract/artifact (APD vocab, schema, parquet, released .rds)."
+    description: "Ripples beyond this repo: coordinated changes/rebuilds across packages."
+  - name: "breaking"
+    color: "e11d21"
+    description: "Breaking change with downstream impact — update dependents."

@@ -12,29 +12,27 @@ Every issue should end triage with:
 - **Which repo** is the board's `Repository` field (automatic) — there are **no `pkg:` labels**. For a
   sub-area within a repo, prefix the title `[area]` (e.g. `[schema] ...`). See `project-board.md`.
 - **Board Priority + Status** — set on the board card, **not** as labels. The board owns these; there
-  are deliberately no `priority:*` labels and no `status:` labels for Backlog/In-Progress/Done/On-going
-  (see [`project-board.md`](project-board.md) → "Division of labour").
-- **`status:*`** — only the out-of-band states the board can't express: `status:triage` (pre-board),
-  `status:blocked`, `status:needs-info`.
+  are no `priority:`/`status:` labels. A new issue with **no Status** *is* the triage queue — there is
+  no `triage` label (see [`project-board.md`](project-board.md) → "Division of labour").
+- **`blocked` / `needs-info`** — orthogonal flags that can apply at any board Status.
 
-Add **`cross:*`** whenever the work spans repos:
+Add cross-package signals whenever work spans repos:
 
-- `cross:breaking` — downstream-breaking (e.g. an APD vocabulary change). Almost always pair with…
-- `cross:contract` — touches a cross-boundary artifact (APD vocab, traits.build schema, APCalign
-  parquet, the released `.rds`).
-- `cross:ripple` — needs coordinated changes/rebuilds in >1 repo (see `release-playbooks.md`).
+- **`cross-package`** — has consequences beyond this repo: coordinated changes/rebuilds across
+  packages (see `release-playbooks.md`).
+- **`breaking`** — a breaking change with downstream impact (often paired with `cross-package`).
 
-Community labels (`question`, `invalid`, `wontfix`) are uniform across the family. (`good first
-issue`, `help wanted`, `duplicate` were trimmed as not useful.)
+`question` is the one community label.
 
 ## New issue → done (the short version)
 
-1. New issue lands → `status:triage` + a work-type (`bug`/`task`/`epic`); auto-added to board #9.
-2. Triaged → set board **Priority** + board **Status = Backlog**; drop `status:triage`.
+1. New issue lands → auto-added to board #9 with **no Status** (= the triage queue); add a work-type
+   (`bug`/`task`/`epic`).
+2. Triaged → set board **Priority** + board **Status = Backlog**.
 3. Started → board **Status = In Progress**.
-4. Cross-package? → add `cross:*` and **link the partner issues in the other repos**. Use the
-   relevant playbook in `release-playbooks.md`.
-5. Done → board **Status = Done**, close.
+4. Cross-package? → add `cross-package` (and `breaking` if it breaks dependents) and **link the partner
+   issues in the other repos**. Use the relevant playbook in `release-playbooks.md`.
+5. Done → board **Status = Done**, close (comment the resolution rather than labelling it).
 
 ## PR discipline (family-wide)
 
@@ -43,7 +41,8 @@ issue`, `help wanted`, `duplicate` were trimmed as not useful.)
   `traits.build` → `master`, `APCalign` → `master`, `austraits` → `master`, `APD` → `develop`,
   `austraits.build` → `develop`, `austraits-meta` → `main`.
 - R packages: PRs must pass `R CMD check` / testthat (see each repo's `.github/workflows/`).
-- For cross-package changes, link the PRs to each other and to the tracking issue, and label `cross:*`.
+- For cross-package changes, link the PRs to each other and to the tracking issue, and label
+  `cross-package` (+ `breaking` if dependents must change).
 
 ## Source-of-truth reminders (don't fight the pipeline)
 
@@ -67,8 +66,9 @@ Each is listed explicitly in `apply-labels.sh`. Still family-scoped — never or
 ### Resolved
 
 - **No `pkg:` labels** (2026-06-28). "Which repo" = the board's `Repository` field; sub-area = `[prefix]`
-  title; cross-package impact = `cross:*`. A `pkg:` label per repo just duplicated `Repository`.
-- **Community labels trimmed** — dropped `good first issue` / `help wanted` / `duplicate`.
+  title; cross-package impact = `cross-package`/`breaking`. A `pkg:` label per repo just duplicated `Repository`.
+- **Community labels trimmed** — dropped `good first issue` / `help wanted` / `duplicate` / `invalid` /
+  `wontfix` (comment on close instead). No `triage` label (no-Status = triage queue).
 - **Board Status** — deleted unused `-Done`; kept `Backlog/In Progress/Done/On-going`.
 
 ### Still open for maintainers

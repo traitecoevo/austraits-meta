@@ -23,7 +23,7 @@ change** for everything built against the old vocabulary. Default to treating it
 4. **austraits.build** — rebuild the database; resolve any trait-validation failures (records using a
    removed/renamed trait or disallowed value will surface here).
 5. Sibling traits.build databases (`AusFizz`, `ausinvertraits.build`) that pin APD — repeat steps 3–4.
-6. Cut the affected issues with `cross:breaking` + `cross:contract`; link across repos.
+6. Cut the affected issues with `cross-package` + `breaking`; link across repos.
 
 ---
 
@@ -35,7 +35,7 @@ change** for everything built against the old vocabulary. Default to treating it
    tests/benchmarks, e.g. the `2024-10-11` pin) deliberately.
 3. **austraits.build** — re-align taxonomy and rebuild; check taxonomic columns / native-introduced
    status for diffs.
-4. Label `cross:contract` (the parquet is a cross-boundary artifact).
+4. Label `cross-package` (the parquet is a cross-boundary artifact).
 
 ---
 

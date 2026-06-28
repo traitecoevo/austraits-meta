@@ -40,26 +40,27 @@ The reference implementation lives in `traitecoevo/austraits-meta`:
 > ```
 > Add `--repo` lines for any new plant repos.
 
-### Out-of-band states (board owns the rest)
-`status:triage`, `status:blocked`, `status:needs-info` — only the states the board's **Status** field
-can't express. Do **not** create labels mirroring board Status (Backlog/In Progress/Done) or any
-Priority field; those live on the board (labels and board fields don't auto-sync → drift).
+### Orthogonal flags (board owns the workflow itself)
+`blocked`, `needs-info` — bare labels for states that coexist with any board Status. Do **not** create
+labels mirroring board Status (Backlog/In Progress/Done) or Priority; those live on the board (labels
+and board fields don't auto-sync → drift). **There is no `triage` label** — a new issue with no board
+Status *is* the triage queue (filter a "🔍 Triage" view on Status = empty).
 
 ### Community
-`question`, `invalid`, `wontfix`. (We deliberately **dropped** `good first issue`, `help wanted`,
-`duplicate` as not useful — don't reintroduce them.)
+`question` only. We deliberately **dropped** `good first issue`, `help wanted`, `duplicate`, `invalid`,
+and `wontfix` (comment on close instead of labelling) — don't reintroduce them.
 
 ### Grouping (the multi-repo pattern)
 - **Repo axis:** the board's **`Repository`** field (automatic). **Do NOT add `pkg:` labels** —
   austraits tried one-per-repo and removed them; they just duplicated `Repository` and cluttered every
-  repo's label picker. (Reach for `cross:*` when an issue is *about* a different repo.)
+  repo's label picker. (Reach for `cross-package` when an issue is *about* a different repo.)
 - **Sub-area within a repo:** the **`[prefix]` issue-title convention** plant already uses
   (`[env drivers] ...`). Keep it — it's now the org-wide convention for the finer grain.
 - **Cross-cutting cut (e.g. dev/data):** a board **`Area`** single-select field (austraits added
   `Area = dev|data`). plant's board already has an `Area` field — populate/extend it if a similar cut
   becomes relevant.
-- **Cross-package impact:** `cross:*` labels (`cross:breaking`, `cross:ripple`, `cross:contract`) —
-  add these to plant only once it has genuine cross-repo dependencies.
+- **Cross-package impact:** `cross-package` (+ `breaking` if dependents must change) — add these to
+  plant only once it has genuine cross-repo dependencies.
 
 ### Auto-add issues to the board
 Use a per-repo `.github/workflows/add-to-project.yml` with `actions/add-to-project`, pointing at board
@@ -74,8 +75,8 @@ project "Auto-add" workflow is UI-only and repo-count-limited.)
 1. **Recolour** `bug`/`task`/`epic` to the shared palette (snippet above). *Lowest-effort consistency
    win; do this first.*
 2. **Decide how much of the shared set plant wants.** Minimal = just the recoloured core + the board.
-   Fuller = also add `status:triage/blocked/needs-info`, community (`question`/`invalid`/`wontfix`),
-   and `cross:*` if plant gains cross-repo dependencies. (No `pkg:` labels — see above.)
+   Fuller = also add `blocked`/`needs-info`, `question`, and `cross-package`/`breaking` if plant gains
+   cross-repo dependencies. (No `pkg:` labels, no `triage`/`invalid`/`wontfix` — see above.)
 3. If fuller: **adapt `apply-labels.sh`** — copy it and swap `FAMILY_REPOS` for plant's repos. The
    whole taxonomy (core + status + community + cross) is family-agnostic, so `labels.yml` can be reused
    as-is. Keep it gated (dry-run by default; `--apply` to run).
@@ -140,6 +141,7 @@ board URLs at plant/board #5. The `governance/*.md` docs are 80% reusable — ad
 
 ## What NOT to do
 - Don't mirror board Status/Priority as labels.
-- Don't reintroduce `good first issue`/`help wanted`/`duplicate`.
+- Don't reintroduce `good first issue`/`help wanted`/`duplicate`/`invalid`/`wontfix`, or a `triage`
+  label, or `pkg:` labels.
 - Don't enumerate the whole org in any apply script — hard-code plant's repo list.
 - Don't touch the org `.github` repo or other families' repos.
