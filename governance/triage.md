@@ -8,8 +8,9 @@ The label taxonomy lives in [`labels.yml`](labels.yml); board conventions in
 
 Every issue should end triage with:
 
-- **`pkg:*`** — which package/area. (More than one is fine for cross-cutting issues; pair with `cross:*`.)
 - **work-type** — `bug` / `task` / `epic` (the shared org-wide core; same names as plant-family).
+- **Which repo** is the board's `Repository` field (automatic) — there are **no `pkg:` labels**. For a
+  sub-area within a repo, prefix the title `[area]` (e.g. `[schema] ...`). See `project-board.md`.
 - **Board Priority + Status** — set on the board card, **not** as labels. The board owns these; there
   are deliberately no `priority:*` labels and no `status:` labels for Backlog/In-Progress/Done/On-going
   (see [`project-board.md`](project-board.md) → "Division of labour").
@@ -28,7 +29,7 @@ issue`, `help wanted`, `duplicate` were trimmed as not useful.)
 
 ## New issue → done (the short version)
 
-1. New issue lands → `status:triage` + `pkg:*` + a work-type (`bug`/`task`/`epic`).
+1. New issue lands → `status:triage` + a work-type (`bug`/`task`/`epic`); auto-added to board #9.
 2. Triaged → set board **Priority** + board **Status = Backlog**; drop `status:triage`.
 3. Started → board **Status = In Progress**.
 4. Cross-package? → add `cross:*` and **link the partner issues in the other repos**. Use the
@@ -61,14 +62,17 @@ issue`, `help wanted`, `duplicate` were trimmed as not useful.)
 `austraits.build`, `austraits`, `austraits-meta`), docs/scaffolding (`traits.build-book`,
 `traits.build-template`), apps/API/web (`APCalign-app`, `austraits-api`, `austraits-api-nectar`,
 `austraits.org`, `austraits.portal`), and sibling databases (`AusFizz`, `ausinvertraits.build`).
-Each repo has its own `pkg:*` label and is listed explicitly in `apply-labels.sh`. Still
-family-scoped — never org-wide.
+Each is listed explicitly in `apply-labels.sh`. Still family-scoped — never org-wide.
+
+### Resolved
+
+- **No `pkg:` labels** (2026-06-28). "Which repo" = the board's `Repository` field; sub-area = `[prefix]`
+  title; cross-package impact = `cross:*`. A `pkg:` label per repo just duplicated `Repository`.
+- **Community labels trimmed** — dropped `good first issue` / `help wanted` / `duplicate`.
+- **Board Status** — deleted unused `-Done`; kept `Backlog/In Progress/Done/On-going`.
 
 ### Still open for maintainers
 
-1. **Board config fixes** — `Done` vs `-Done`, and the `low prioirity` typo (see `project-board.md`).
-2. **Default labels** — GitHub seeds repos with `bug`/`enhancement`/etc. Decide whether to delete them
-   in favour of this taxonomy (the script does NOT delete; see its footer).
-3. **`pkg:` granularity** — currently one label per repo (1:1 with the apply list). If that is too noisy
-   on peripheral repos, consider grouping (e.g. fold `pkg:austraits-api-nectar` into `pkg:austraits-api`,
-   or `pkg:austraits-org`/`pkg:austraits-portal` into a single `pkg:austraits-web`).
+1. **Board Priority typo** — `low prioirity` (rename the option in the UI; preserves assignments).
+2. **Default labels** — any leftover repo-local labels not in the taxonomy (`documentation`,
+   `coming soon!`, etc.) — keep or delete deliberately (the script does NOT delete them).

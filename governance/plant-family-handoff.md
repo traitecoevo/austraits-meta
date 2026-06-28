@@ -50,9 +50,9 @@ Priority field; those live on the board (labels and board fields don't auto-sync
 `duplicate` as not useful — don't reintroduce them.)
 
 ### Grouping (the multi-repo pattern)
-- **Repo/package axis:** the board's **`Repository`** field, optionally reinforced by **`pkg:*`**
-  labels (one per repo). plant is monorepo-ish today, but as it goes multi-repo, add `pkg:*` labels
-  for its repos (e.g. `pkg:plant`, `pkg:overstorey`, `pkg:plant-assembly`).
+- **Repo axis:** the board's **`Repository`** field (automatic). **Do NOT add `pkg:` labels** —
+  austraits tried one-per-repo and removed them; they just duplicated `Repository` and cluttered every
+  repo's label picker. (Reach for `cross:*` when an issue is *about* a different repo.)
 - **Sub-area within a repo:** the **`[prefix]` issue-title convention** plant already uses
   (`[env drivers] ...`). Keep it — it's now the org-wide convention for the finer grain.
 - **Cross-cutting cut (e.g. dev/data):** a board **`Area`** single-select field (austraits added
@@ -75,10 +75,10 @@ project "Auto-add" workflow is UI-only and repo-count-limited.)
    win; do this first.*
 2. **Decide how much of the shared set plant wants.** Minimal = just the recoloured core + the board.
    Fuller = also add `status:triage/blocked/needs-info`, community (`question`/`invalid`/`wontfix`),
-   and `pkg:*` for plant's repos. Recommend the fuller set once plant is multi-repo.
-3. If fuller: **adapt `apply-labels.sh`** — copy it, swap `FAMILY_REPOS` for plant's repos, and edit
-   `labels.yml` so the `pkg:*` block lists plant's repos instead of austraits'. The shared core +
-   status + community blocks stay identical. Keep it gated (dry-run by default; `--apply` to run).
+   and `cross:*` if plant gains cross-repo dependencies. (No `pkg:` labels — see above.)
+3. If fuller: **adapt `apply-labels.sh`** — copy it and swap `FAMILY_REPOS` for plant's repos. The
+   whole taxonomy (core + status + community + cross) is family-agnostic, so `labels.yml` can be reused
+   as-is. Keep it gated (dry-run by default; `--apply` to run).
 4. **Board #5 fields:** plant already has Status (Backlog/In Progress/Done) and an `Area` field — good.
    No Priority field today (fine; austraits uses one, plant needn't). Confirm whether plant wants
    `On-going` like austraits #9.
@@ -130,13 +130,11 @@ plant-meta/
 
 ### Fastest way to bootstrap `plant-meta`
 Copy `austraits-meta`'s structure, then: rewrite `AGENTS.md`/`dependencies.yml` for plant's repos;
-edit `labels.yml`'s `pkg:*` block to plant's repos (keep the shared core/status/community blocks
-verbatim); point `apply-labels.sh`'s `FAMILY_REPOS` and the board URLs at plant/board #5. The
-`governance/*.md` docs are 80% reusable — adjust names and repo lists.
+reuse `labels.yml` as-is (it's family-agnostic); point `apply-labels.sh`'s `FAMILY_REPOS` and the
+board URLs at plant/board #5. The `governance/*.md` docs are 80% reusable — adjust names and repo lists.
 
 ## Open questions for the plant maintainer
 - How minimal vs full should plant's label set be (step 2)?
-- `pkg:*` names for plant's current/planned repos?
 - Keep board #5's `Area` field, and with which options?
 - Want a `plant-meta` repo (step 6)?
 

@@ -15,7 +15,7 @@ traits.build = engine/schema, austraits.build = the dataset, austraits = access 
 
 Write a specific, action-oriented title. For a sub-area within a repo, **prefix with `[area]`** —
 the org convention — e.g. `[schema] allow units on categorical traits`, `[taxonomy] handle hybrid
-names`.
+names`. (Which repo the issue is about is the board's `Repository` field — there are no `pkg:` labels.)
 
 ## Labels (what to add)
 
@@ -28,8 +28,6 @@ Pick **one work-type**, plus context:
 | `epic` | A new feature/capability spanning multiple tasks (use the board's sub-issues to break it down) |
 
 Then add, as relevant:
-- **`pkg:<repo>`** — which package the issue concerns (especially if it's *about* a different package
-  than the one you filed in).
 - **`cross:breaking` / `cross:ripple` / `cross:contract`** — if the change ripples across packages
   (e.g. an APD vocabulary change). See [`release-playbooks.md`](release-playbooks.md).
 - **`status:blocked` / `status:needs-info`** — if it's waiting on something. New, un-triaged issues
@@ -42,7 +40,7 @@ Then add, as relevant:
 ## What happens next
 
 1. Your issue auto-adds to board #9.
-2. A maintainer triages: confirms the work-type/`pkg:`, sets board **Priority** + **Status = Backlog**,
+2. A maintainer triages: confirms the work-type, sets board **Priority** + **Status = Backlog**,
    and drops `status:triage`.
 3. Cross-package issues get `cross:*` and are linked to partner issues in the other repos.
 

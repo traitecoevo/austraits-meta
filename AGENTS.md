@@ -38,8 +38,8 @@ nothing here applies to them.
 
 > **Governance scope (decided 2026-06-28):** the label taxonomy applies to **every git repo in the
 > austraits-family folder** — all of the above plus the pipeline core, including `austraits.build`.
-> `governance/labels.yml` carries a `pkg:` label per repo and `governance/apply-labels.sh` targets the
-> full explicit list. It is still scoped to the family ONLY (never org-wide).
+> `governance/apply-labels.sh` targets the full explicit list. There are **no `pkg:` labels** — which
+> repo an issue concerns is the board's `Repository` field. Still scoped to the family ONLY (never org-wide).
 
 ---
 
