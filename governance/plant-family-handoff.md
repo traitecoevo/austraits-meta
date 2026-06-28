@@ -64,7 +64,7 @@ and `wontfix` (comment on close instead of labelling) — don't reintroduce them
 
 ### Auto-add issues to the board
 Use a per-repo `.github/workflows/add-to-project.yml` with `actions/add-to-project`, pointing at board
-#5, authenticated by an org secret (`ADD_TO_PROJECT_PAT`, Projects read/write). See
+#5, authenticated by an org secret (`ADD_TO_PROJECT`, Projects read/write). See
 [`auto-add-to-board.md`](auto-add-to-board.md) for the exact workflow and token setup. (The built-in
 project "Auto-add" workflow is UI-only and repo-count-limited.)
 
@@ -83,7 +83,7 @@ project "Auto-add" workflow is UI-only and repo-count-limited.)
 4. **Board #5 fields:** plant already has Status (Backlog/In Progress/Done) and an `Area` field — good.
    No Priority field today (fine; austraits uses one, plant needn't). Confirm whether plant wants
    `On-going` like austraits #9.
-5. **Auto-add workflow** to each plant repo (draft PRs), after setting `ADD_TO_PROJECT_PAT`.
+5. **Auto-add workflow** to each plant repo (draft PRs), after setting `ADD_TO_PROJECT`.
 6. Create a **`plant-meta`** repo mirroring `austraits-meta` (see next section) to hold plant's
    cross-repo knowledge + governance as plant becomes multi-repo.
 
