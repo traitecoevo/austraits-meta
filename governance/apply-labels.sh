@@ -111,12 +111,12 @@ RENAME_MAP=(
   "blocked=>status:blocked"
   "bug 🐛=>bug"
   "enhancement ✨=>task"
-  "duplicate 👥=>duplicate"
-  "good first issue 🐾=>good first issue"
-  "help wanted 😇=>help wanted"
   "question 🙋=>question"
   "wontfix 🦉=>wontfix"
 )
+# Trimmed (not in the taxonomy): good first issue, help wanted, duplicate — and their emoji
+# variants are intentionally NOT remapped. apply-labels.sh does not delete; to remove them use:
+#   gh label delete "good first issue" --repo traitecoevo/<repo> --yes   (done across the family)
 
 for repo in "${REPOS[@]}"; do
   echo "==> $repo"

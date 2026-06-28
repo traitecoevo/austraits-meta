@@ -23,8 +23,8 @@ Add **`cross:*`** whenever the work spans repos:
   parquet, the released `.rds`).
 - `cross:ripple` — needs coordinated changes/rebuilds in >1 repo (see `release-playbooks.md`).
 
-Community labels (`good first issue`, `help wanted`, `duplicate`, `wontfix`) are uniform across the
-family.
+Community labels (`question`, `invalid`, `wontfix`) are uniform across the family. (`good first
+issue`, `help wanted`, `duplicate` were trimmed as not useful.)
 
 ## New issue → done (the short version)
 

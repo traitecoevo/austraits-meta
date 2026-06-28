@@ -14,7 +14,7 @@
 #   ── ORG-SHARED CORE ──  identical (or recommended) across every traitecoevo family
 #        work-type:  bug / task / epic           (verbatim from plant #5)
 #        states:     status:triage / blocked / needs-info   (out-of-band, board can't express)
-#        community:  good first issue / help wanted / question / duplicate / invalid / wontfix
+#        community:  question / invalid / wontfix
 #   ── MULTI-REPO PATTERN ──  same mechanism org-wide; each family supplies its OWN repos.
 #        pkg:*   one per family repo (austraits is multi-repo now; plant is heading there too)
 #        cross:* cross-package contract/ripple signals
@@ -53,19 +53,11 @@ labels:
     color: "d4c5f9"
     description: "Waiting on reporter/maintainer for more information."
 
-  # ---- community (standard; some already exist in repos) ------------------------
-  - name: "good first issue"
-    color: "7057ff"
-    description: "Good for newcomers."
-  - name: "help wanted"
-    color: "008672"
-    description: "Maintainers would welcome help here."
+  # ---- community (trimmed 2026-06-28 — dropped good first issue / help wanted /
+  #      duplicate as not useful for this org) ----------------------------------
   - name: "question"
     color: "d876e3"
     description: "A question or request for clarification."
-  - name: "duplicate"
-    color: "cfd3d7"
-    description: "Already tracked elsewhere."
   - name: "invalid"
     color: "e4e669"
     description: "Not actionable as reported."
