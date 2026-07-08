@@ -14,6 +14,9 @@ and the shared label/triage/release conventions.
 | [`AGENTS.md`](AGENTS.md) | **Start here.** Authoritative cross-package orientation (pipeline, dependency direction, source-of-truth rules, gotchas). |
 | [`.claude/CLAUDE.md`](.claude/CLAUDE.md) | Defers to `AGENTS.md` (kept in sync by reference, not duplication). |
 | [`dependencies.yml`](dependencies.yml) | Machine-readable package graph + cross-boundary artifacts. |
+| [`references/key-papers.md`](references/key-papers.md) | Curated, annotated list of the family's key papers + which repos should cite what. |
+| [`references/austraits-family.bib`](references/austraits-family.bib) | Canonical BibTeX for those papers — copy citations from here. |
+| [`acknowledgements.md`](acknowledgements.md) | Canonical partner + co-investment acknowledgement wording for every repo. |
 | [`governance/labels.yml`](governance/labels.yml) | Family label taxonomy — single source of truth. |
 | [`governance/apply-labels.sh`](governance/apply-labels.sh) | Idempotent sync of labels to family repos (**gated**; hard-coded repo list). |
 | [`governance/project-board.md`](governance/project-board.md) | Structure & conventions of family board [#9](https://github.com/orgs/traitecoevo/projects/9). |

@@ -148,6 +148,14 @@ See `governance/release-playbooks.md` for the step-by-step versions of these.
 
 ---
 
+## Shared assets (in this repo)
+
+- [`references/key-papers.md`](references/key-papers.md) + [`references/austraits-family.bib`](references/austraits-family.bib)
+  — the family's canonical citation set. Every repo's "How to cite" should draw from here so citations
+  stay consistent; `key-papers.md` says which repos cite which paper.
+- [`acknowledgements.md`](acknowledgements.md) — canonical partner + ARDC/NCRIS co-investment wording.
+  Propagate this block into repo READMEs rather than re-writing (the wording had drifted).
+
 ## Governance (in this repo)
 
 - [`dependencies.yml`](dependencies.yml) — machine-readable package graph + cross-boundary artifacts.
