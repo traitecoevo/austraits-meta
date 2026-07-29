@@ -15,15 +15,26 @@ released `.rds` that `austraits` reads. See [`../AGENTS.md`](../AGENTS.md) and
 **APD is a contract.** Changing a trait name, URI, allowed categorical value, or unit is a **breaking
 change** for everything built against the old vocabulary. Default to treating it as breaking.
 
-1. **APD** — make the change in the `*_input.csv` source files (not the generated outputs); rebuild via
-   `build.qmd` so `APD_traits.csv`, `APD_categorical_values.csv`, `APD.ttl/.json/...` regenerate.
-2. Decide whether this warrants an **APD version bump** (it usually does if URIs/definitions change).
-3. **austraits.build** — re-run `scripts/build_traits_yml_from_APD.R` to regenerate `config/traits.yml`
-   from the new APD outputs.
+1. **APD** — edit the inputs in `data/`, then `make data`. Trait definitions live in
+   `APD_traits_input.yml`, which is the source of truth; `make export-csv` / `make import-csv` give you
+   a spreadsheet view if you want one. The other inputs are still CSVs. `make check` validates.
+   APD has its own [`CONTRIBUTING.md`](https://github.com/traitecoevo/APD/blob/develop/CONTRIBUTING.md)
+   — follow that rather than this summary.
+2. Decide whether this warrants an **APD version bump** (it usually does if URIs/definitions change),
+   and cut the release per
+   [`RELEASING.md`](https://github.com/traitecoevo/APD/blob/develop/RELEASING.md). **Downstream reads
+   published releases, not a branch**, so nothing below sees the change until a release exists.
+3. **austraits.build** — bump `apd_version` in `scripts/build_traits_yml_from_APD.R` to the new
+   release, then re-run it to regenerate `config/traits.yml`.
 4. **austraits.build** — rebuild the database; resolve any trait-validation failures (records using a
    removed/renamed trait or disallowed value will surface here).
 5. Sibling traits.build databases (`AusFizz`, `ausinvertraits.build`) that pin APD — repeat steps 3–4.
 6. Cut the affected issues with `cross-package` + `breaking`; link across repos.
+
+> Step 1 previously said to edit `*_input.csv` and rebuild via `build.qmd`. Both stopped being true in
+> 2026: the trait CSV is a gitignored spreadsheet checkout rather than the source of truth, and
+> `build.qmd` was replaced by a `Makefile`. Step 3 previously omitted the version bump, which is the
+> step that actually gets missed — `austraits.build` sat on APD 2.1.0 while APD was at 2.1.1.
 
 ---
 

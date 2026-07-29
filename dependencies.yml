@@ -135,7 +135,7 @@ packages:
 # Related family repos (in board #9 scope, outside the pipeline core / label list as drawn today).
 related_repos:
   traits.build-book:    {repo: traitecoevo/traits.build-book,    role: traits.build manual}
-  traits.build-template:{repo: traitecoevo/traits.build-template, role: starter template for new traits.build databases}
+  traits.build-template: {repo: traitecoevo/traits.build-template, role: starter template for new traits.build databases}
   austraits-api:        {repo: traitecoevo/austraits-api,        role: HTTP API over AusTraits}
   austraits-api-nectar: {repo: traitecoevo/austraits-api-nectar, role: API deployment (Nectar)}
   austraits.org:        {repo: traitecoevo/austraits.org,        role: project website}
@@ -149,15 +149,17 @@ cross_boundary_artifacts:
   - artifact: APD_traits.csv
     producer: APD
     consumer: austraits.build
-    nature: generated (from APD_traits_input.csv via build.qmd)
+    nature: generated (from data/APD_traits_input.yml via `make data`)
+    via: published release URL (traitecoevo.github.io/APD/release/<version>/), pinned by consumer
   - artifact: APD_categorical_values.csv
     producer: APD
     consumer: austraits.build
     nature: generated
-  - artifact: data/APD_trait_hierarchy.csv
+  - artifact: APD_trait_hierarchy.csv
     producer: APD
     consumer: austraits.build
-    nature: authored
+    nature: authored (an APD input table, not a build product)
+    via: published release URL from APD 2.1.1 onwards; earlier releases carry no copy
   - artifact: APD trait URIs (w3id.org/APD/traits/...)
     producer: APD
     consumer: [traits.build (schema/configs/tests), austraits (docs), the built database]
