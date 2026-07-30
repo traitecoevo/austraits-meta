@@ -24,17 +24,32 @@ change** for everything built against the old vocabulary. Default to treating it
    and cut the release per
    [`RELEASING.md`](https://github.com/traitecoevo/APD/blob/develop/RELEASING.md). **Downstream reads
    published releases, not a branch**, so nothing below sees the change until a release exists.
-3. **austraits.build** — bump `apd_version` in `scripts/build_traits_yml_from_APD.R` to the new
-   release, then re-run it to regenerate `config/traits.yml`.
-4. **austraits.build** — rebuild the database; resolve any trait-validation failures (records using a
-   removed/renamed trait or disallowed value will surface here).
-5. Sibling traits.build databases (`AusFizz`, `ausinvertraits.build`) that pin APD — repeat steps 3–4.
-6. Cut the affected issues with `cross-package` + `breaking`; link across repos.
+3. **APD, hand-off** — the ARDC RVA and Zenodo deposits are **manual uploads owned by Elizabeth Wenk**,
+   not automatic. Nothing in APD's CI or its GitHub Releases deposits anything. So a dictionary release
+   is not finished when the tag is pushed; it needs her, and it is the step most likely to stall.
+   APD 2.1.1 and 2.1.2 both shipped unarchived because the checklist wrongly said an integration
+   handled it. Track it as an issue with an assignee rather than a checkbox.
+4. **austraits.build** — bump `apd_version` in `scripts/build_traits_yml_from_APD.R` to the new
+   release, then re-run it to regenerate `config/traits.yml`. The script reads the release **over
+   HTTP**, so this cannot run until APD's deploy has finished and
+   `traitecoevo.github.io/APD/release/<X.Y.Z>/APD_traits.csv` returns 200.
+5. **austraits.build** — rebuild the database; resolve any trait-validation failures (records using a
+   removed/renamed trait or disallowed value will surface here). A regenerated `config/traits.yml` with
+   **no diff** means no rebuild is implied — that is the signal the APD change touched nothing this
+   database validates against.
+6. Sibling traits.build databases (`AusFizz`, `ausinvertraits.build`) that pin APD — repeat steps 4–5.
+7. Cut the affected issues with `cross-package` + `breaking`; link across repos.
 
-> Step 1 previously said to edit `*_input.csv` and rebuild via `build.qmd`. Both stopped being true in
-> 2026: the trait CSV is a gitignored spreadsheet checkout rather than the source of truth, and
-> `build.qmd` was replaced by a `Makefile`. Step 3 previously omitted the version bump, which is the
-> step that actually gets missed — `austraits.build` sat on APD 2.1.0 while APD was at 2.1.1.
+> **What this section got wrong, twice.** Step 1 used to say edit `*_input.csv` and rebuild via
+> `build.qmd`; neither has existed since 2026 — the trait CSV is a gitignored spreadsheet checkout and
+> `build.qmd` became a `Makefile`. Step 4 used to omit the version bump, which is the step that actually
+> gets missed: `austraits.build` sat on APD 2.1.0 while APD reached 2.1.2 (fixed in
+> [austraits.build#852](https://github.com/traitecoevo/austraits.build/pull/852)). And the archive
+> hand-off in step 3 was not mentioned at all, which is how two releases went undeposited.
+>
+> The general lesson, worth applying to the other playbooks here: **a step that depends on an external
+> service or another person is the one that silently does not happen.** Give it an owner and an issue,
+> and verify the external state rather than assuming a mechanism handled it.
 
 ---
 
