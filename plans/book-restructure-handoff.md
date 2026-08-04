@@ -78,5 +78,7 @@ Run this with **Fable** — it is prose authoring and structural judgement, not 
   renders. Rebase clean vs PR #25 first.
 - Canonical citation + acknowledgement wording: `austraits-meta/references/` and
   `austraits-meta/acknowledgements.md`.
-- Full source review with exact line numbers: see the audit summarised in
-  `plans/family-usability-overhaul.md` (Deliverable 5).
+- Full source review with exact line numbers: the audit was summarised in
+  `plans/family-usability-overhaul.md` (Deliverable 5), removed from this repo once its deliverables
+  shipped. Recover it from git history if the line references are still needed:
+  `git log --diff-filter=D --oneline -- plans/family-usability-overhaul.md`.
