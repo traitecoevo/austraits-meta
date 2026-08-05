@@ -16,6 +16,22 @@ The reference implementation lives in `traitecoevo/austraits-meta`:
 - [`governance/auto-add-to-board.md`](auto-add-to-board.md) — auto-add issues to the board
 - [`governance/triage.md`](triage.md) — triage discipline
 
+## Traffic in the other direction
+
+Alignment is not one-way, and it is worth recording which way each convention travelled so neither
+family re-derives the other's work:
+
+- **Labels, board, triage** — austraits-meta → plant-meta (this document).
+- **Commit messages / PR descriptions** — plant-meta → austraits-meta. Written first as
+  [`plant-meta/governance/commit-messages.md`](https://github.com/traitecoevo/plant-meta/blob/main/governance/commit-messages.md)
+  (plant-meta#6), then measured independently against the AusTraits repos and adopted here as
+  [`commit-messages.md`](commit-messages.md) (2026-08-05). The rule is the same; the evidence and the
+  worked examples are austraits' own, and this family adds one clause plant does not need — a change
+  that moves published trait values must state its blast radius in the commit.
+
+Keep the two in sync deliberately: if one family changes a shared convention, update the other's copy
+in the same week, or write down why they now differ.
+
 ---
 
 ## The shared org convention (applies to BOTH families)

@@ -22,6 +22,7 @@ and the shared label/triage/release conventions.
 | [`governance/project-board.md`](governance/project-board.md) | Structure & conventions of family board [#9](https://github.com/orgs/traitecoevo/projects/9). |
 | [`governance/auto-add-to-board.md`](governance/auto-add-to-board.md) | How new issues from all repos auto-add to board #9 (workflow + token secret). |
 | [`governance/issue-guide.md`](governance/issue-guide.md) | Contributor guide: how to file & label issues across the family (repos point here). |
+| [`governance/commit-messages.md`](governance/commit-messages.md) | Commit-message & PR-description convention — squash merge makes the PR title + body permanent history (repos point here). |
 | [`governance/plant-family-handoff.md`](governance/plant-family-handoff.md) | Handoff for applying this convention to the plant-family + the meta-repo pattern. |
 | [`governance/release-playbooks.md`](governance/release-playbooks.md) | Cross-repo release sequences (e.g. "dictionary change → rebuild X then Y"). |
 | [`governance/triage.md`](governance/triage.md) | Contribution + triage discipline; open scope questions. |

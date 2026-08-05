@@ -37,9 +37,17 @@ Add cross-package signals whenever work spans repos:
 ## PR discipline (family-wide)
 
 - All work goes through a **feature branch + PR**; never commit to a repo's default branch.
-- Default branches vary across the family — confirm before branching:
-  `traits.build` → `master`, `APCalign` → `master`, `austraits` → `master`, `APD` → `develop`,
-  `austraits.build` → `develop`, `austraits-meta` → `main`.
+- Default branches vary across the family — confirm with
+  `gh api repos/traitecoevo/<repo> --jq .default_branch` before branching, as a stale local
+  `origin/HEAD` will disagree: `traits.build` → `develop`, `APD` → `develop`,
+  `austraits.build` → `develop`, `austraits.portal` → `develop`; `APCalign`, `austraits`,
+  `austraits-meta`, `traits.build-book`, `austraits.org`, `APCalign-app` and `AusFizz` → `master`.
+- **The PR title and body are the commit message** — every family repo squash-merges, so GitHub copies
+  them verbatim into permanent history and appends ` (#NNN)`. Keep the subject ≤50 characters as typed
+  and the body ≤10 lines (hard ceiling 20); put the working detail — what you tried, benchmarks, test
+  counts, rejected alternatives — in the **first PR comment** instead. A change that moves published
+  trait values states its blast radius in the commit, in one line. Full convention, with worked
+  examples: [`commit-messages.md`](commit-messages.md).
 - R packages: PRs must pass `R CMD check` / testthat (see each repo's `.github/workflows/`).
 - For cross-package changes, link the PRs to each other and to the tracking issue, and label
   `cross-package` (+ `breaking` if dependents must change).
