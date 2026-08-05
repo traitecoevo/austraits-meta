@@ -166,6 +166,8 @@ See `governance/release-playbooks.md` for the step-by-step versions of these.
   [#9](https://github.com/orgs/traitecoevo/projects/9); labels-vs-board-fields division of labour.
 - [`governance/auto-add-to-board.md`](governance/auto-add-to-board.md) — auto-add new issues to board #9.
 - [`governance/issue-guide.md`](governance/issue-guide.md) — contributor guide for filing/labelling issues.
+- [`governance/commit-messages.md`](governance/commit-messages.md) — commit/PR-description convention;
+  squash merge makes the PR title + body the permanent commit message.
 - [`governance/plant-family-handoff.md`](governance/plant-family-handoff.md) — meta-repo pattern + plant-family handoff.
 - [`governance/release-playbooks.md`](governance/release-playbooks.md) — cross-repo release sequences.
 - [`governance/triage.md`](governance/triage.md) — contribution + triage discipline, plus open scope
