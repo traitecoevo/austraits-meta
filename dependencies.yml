@@ -124,7 +124,7 @@ packages:
     repo: traitecoevo/austraits-meta
     kind: governance
     role: This repo — cross-package knowledge + governance
-    default_branch: main
+    default_branch: master
     r_imports: []
     r_depends: []
     data_consumes: []
@@ -141,6 +141,7 @@ related_repos:
   austraits.org:        {repo: traitecoevo/austraits.org,        role: project website}
   austraits.portal:     {repo: traitecoevo/austraits.portal,     role: data portal}
   APCalign-app:         {repo: traitecoevo/APCalign-app,         role: Shiny app for APCalign}
+  austraits-means:      {repo: traitecoevo/austraits-means,      role: species-level trait means (observed + climate-centred modelled) derived from AusTraits; consumes the released database and APCalign}
   AusFizz:              {repo: traitecoevo/AusFizz,              role: sibling traits.build database}
   ausinvertraits.build: {repo: traitecoevo/ausinvertraits.build, role: sibling traits.build database (invertebrates)}
 

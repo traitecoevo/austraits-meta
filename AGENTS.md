@@ -33,8 +33,8 @@ nothing here applies to them.
 
 **Other family repos** (in scope for the family/board #9 and for governance, but not pipeline core):
 `traits.build-book`, `traits.build-template`, `austraits-api`, `austraits-api-nectar`, `austraits.org`,
-`austraits.portal`, `APCalign-app`, and sibling traits.build databases `AusFizz` and
-`ausinvertraits.build`.
+`austraits.portal`, `APCalign-app`, the derived species-means product `austraits-means`, and sibling
+traits.build databases `AusFizz` and `ausinvertraits.build`.
 
 > **Governance scope (decided 2026-06-28):** the label taxonomy applies to **every git repo in the
 > austraits-family folder** — all of the above plus the pipeline core, including `austraits.build`.
