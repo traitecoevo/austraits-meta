@@ -40,6 +40,8 @@ FAMILY_REPOS=(
   traitecoevo/austraits-api-nectar
   traitecoevo/austraits.org
   traitecoevo/austraits.portal
+  # derived data products
+  traitecoevo/austraits-means
   # sibling traits.build databases
   traitecoevo/AusFizz
   traitecoevo/ausinvertraits.build

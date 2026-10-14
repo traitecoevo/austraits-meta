@@ -6,7 +6,8 @@ Documents the **structure and conventions** of the family board, not its live ca
 - **Owner:** `traitecoevo` org · **Visibility:** Public
 - **Scope (from the board README):** development across the AusTraits project — the AusTraits database
   (`austraits.build`), `traits.build`, the traits.build book, `APD`, the AusTraits API, the `austraits`
-  R package, and `APCalign`; plus sibling traits.build databases `AusFizz` and `ausinvertraits.build`.
+  R package, and `APCalign`; the species-means product `austraits-means`; plus sibling traits.build
+  databases `AusFizz` and `ausinvertraits.build`.
 
 This is the **single, family-scoped board**. Because it already covers exactly one family, labels stay
 family-local and there is no cross-family `family:` axis.
