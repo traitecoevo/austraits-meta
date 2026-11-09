@@ -37,7 +37,6 @@ FAMILY_REPOS=(
   # apps / API / web
   traitecoevo/APCalign-app
   traitecoevo/austraits-api
-  traitecoevo/austraits-api-nectar
   traitecoevo/austraits.org
   traitecoevo/austraits.portal
   # derived data products

@@ -95,7 +95,7 @@ Andrew SC, Martín-Forés I, Guerin GR, Coleman D, Falster DS, Wenk E, Wright IJ
 | `austraits` | Falster-2021a |
 | `austraits.build` | Falster-2021a, Wenk-2024a, Wenk-2024c (+ Tier 2: Coleman-2023, Wenk-2024d) |
 | `austraits.org` | Falster-2021a (+ Tier 1 set on the "How to cite" panel) |
-| `austraits.portal`, `austraits-api`, `austraits-api-nectar` | Falster-2021a |
+| `austraits.portal`, `austraits-api` | Falster-2021a |
 | `traits.build`, `traits.build-book`, `traits.build-template` | Wenk-2024b |
 | `AusFizz`, `ausinvertraits.build` | Wenk-2024b (+ their own dataset DOI) |
 | `APD` | Wenk-2024a |
