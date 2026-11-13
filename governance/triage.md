@@ -40,7 +40,7 @@ Add cross-package signals whenever work spans repos:
 - Default branches vary across the family — confirm with
   `gh api repos/traitecoevo/<repo> --jq .default_branch` before branching, as a stale local
   `origin/HEAD` will disagree: `traits.build` → `develop`, `APD` → `develop`,
-  `austraits.build` → `develop`; `APCalign`, `austraits`, `austraits-meta`, `austraits-means`,
+  `austraits.build` → `develop`; `APCalign`, `austraits`, `traits.use`, `austraits-meta`, `austraits-means`,
   `austraits.portal`, `traits.build-book`, `austraits.org`, `APCalign-app` and `AusFizz` → `master`.
 - **The PR title and body are the commit message** — every family repo squash-merges, so GitHub copies
   them verbatim into permanent history and appends ` (#NNN)`. Keep the subject ≤50 characters as typed
@@ -65,7 +65,7 @@ Add cross-package signals whenever work spans repos:
 ## Scope decisions
 
 **Decided 2026-06-28 — governance covers the whole family folder.** The label taxonomy applies to
-**every git repo in the austraits-family folder**: pipeline core (`APD`, `APCalign`, `traits.build`,
+**every git repo in the austraits-family folder**: pipeline core (`APD`, `APCalign`, `traits.build`, `traits.use` (added 2026-11-14),
 `austraits.build`, `austraits`, `austraits-meta`), docs/scaffolding (`traits.build-book`,
 `traits.build-template`), apps/API/web (`APCalign-app`, `austraits-api`, `austraits.org`,
 `austraits.portal`; `austraits-api-nectar` was dropped 2026-11-09 when the repo was deleted), derived data products (`austraits-means`, added 2026-10-14), and

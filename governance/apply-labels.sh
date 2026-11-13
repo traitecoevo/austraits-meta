@@ -28,6 +28,7 @@ FAMILY_REPOS=(
   traitecoevo/traits.build
   traitecoevo/APCalign
   traitecoevo/austraits
+  traitecoevo/traits.use
   traitecoevo/APD
   traitecoevo/austraits.build
   traitecoevo/austraits-meta

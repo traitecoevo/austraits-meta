@@ -120,6 +120,24 @@ packages:
     assumes:
       - Taxonomy already aligned by APCalign during austraits.build; austraits does NOT re-align.
 
+  traits.use:
+    repo: traitecoevo/traits.use
+    kind: r-package                  # aiming for CRAN
+    status: in-development           # created 2026-11-14; nothing released yet
+    role: Generic reader for any traits.build database (load, extract, join, flatten, summarise, plot)
+    plan: https://github.com/traitecoevo/austraits/issues/188
+    note: >
+      Being split out of austraits, which will become a thin AusTraits layer re-exporting it.
+      Edges below are the agreed target; until the split lands, the austraits entry is current.
+    default_branch: master
+    r_imports: []                    # must never depend on traits.build (CRAN)
+    r_depends: []
+    data_consumes:
+      - from: any traits.build database (relational .rds, or the stamped flattened table)
+        via: load_database()
+    produces:
+      - traits.use package functions
+
   austraits-meta:
     repo: traitecoevo/austraits-meta
     kind: governance
