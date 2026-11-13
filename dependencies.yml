@@ -137,7 +137,6 @@ related_repos:
   traits.build-book:    {repo: traitecoevo/traits.build-book,    role: traits.build manual}
   traits.build-template: {repo: traitecoevo/traits.build-template, role: starter template for new traits.build databases}
   austraits-api:        {repo: traitecoevo/austraits-api,        role: HTTP API over AusTraits}
-  austraits-api-nectar: {repo: traitecoevo/austraits-api-nectar, role: API deployment (Nectar)}
   austraits.org:        {repo: traitecoevo/austraits.org,        role: project website}
   austraits.portal:     {repo: traitecoevo/austraits.portal,     role: data portal}
   APCalign-app:         {repo: traitecoevo/APCalign-app,         role: Shiny app for APCalign}

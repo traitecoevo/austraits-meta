@@ -32,7 +32,7 @@ nothing here applies to them.
 | `austraits-meta` | this repo | Cross-package knowledge + governance (labels, board, playbooks). |
 
 **Other family repos** (in scope for the family/board #9 and for governance, but not pipeline core):
-`traits.build-book`, `traits.build-template`, `austraits-api`, `austraits-api-nectar`, `austraits.org`,
+`traits.build-book`, `traits.build-template`, `austraits-api`, `austraits.org`,
 `austraits.portal`, `APCalign-app`, the derived species-means product `austraits-means`, and sibling
 traits.build databases `AusFizz` and `ausinvertraits.build`.
 

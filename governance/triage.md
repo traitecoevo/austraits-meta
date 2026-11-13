@@ -67,8 +67,8 @@ Add cross-package signals whenever work spans repos:
 **Decided 2026-06-28 — governance covers the whole family folder.** The label taxonomy applies to
 **every git repo in the austraits-family folder**: pipeline core (`APD`, `APCalign`, `traits.build`,
 `austraits.build`, `austraits`, `austraits-meta`), docs/scaffolding (`traits.build-book`,
-`traits.build-template`), apps/API/web (`APCalign-app`, `austraits-api`, `austraits-api-nectar`,
-`austraits.org`, `austraits.portal`), derived data products (`austraits-means`, added 2026-10-14), and
+`traits.build-template`), apps/API/web (`APCalign-app`, `austraits-api`, `austraits.org`,
+`austraits.portal`; `austraits-api-nectar` was dropped 2026-11-09 when the repo was deleted), derived data products (`austraits-means`, added 2026-10-14), and
 sibling databases (`AusFizz`, `ausinvertraits.build`).
 Each is listed explicitly in `apply-labels.sh`. Still family-scoped — never org-wide.
 
