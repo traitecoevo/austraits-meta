@@ -29,6 +29,7 @@ nothing here applies to them.
 | `traits.build` | R package | The generic **workflow engine** + relational **data model/schema** for harmonising trait data. |
 | `austraits.build` | Compendium | The actual **AusTraits dataset compilation** (uses the engine + APD + APCalign). Produces the released `.rds`. |
 | `austraits` | R package | The user-facing **access/wrangle API** for `traits.build`-format databases (incl. AusTraits). |
+| `traits.use` | R package (in development) | The generic **reader** for any `traits.build` database, being split out of `austraits` ([austraits#188](https://github.com/traitecoevo/austraits/issues/188)). `austraits` will become a thin AusTraits layer over it. Until `traits.use` is released, `austraits` is still the reader. |
 | `austraits-meta` | this repo | Cross-package knowledge + governance (labels, board, playbooks). |
 
 **Other family repos** (in scope for the family/board #9 and for governance, but not pipeline core):
