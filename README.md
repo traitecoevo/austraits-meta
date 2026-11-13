@@ -31,7 +31,7 @@ and the shared label/triage/release conventions.
 
 The **AusTraits family only** — a subset of the `traitecoevo` org. Nothing here applies org-wide or to
 other families (e.g. the `plant` modelling stack). Pipeline-core repos: `APD`, `APCalign`,
-`traits.build`, `austraits.build`, `austraits`, and this repo. See `AGENTS.md` for the full list.
+`traits.build`, `austraits.build`, `austraits`, `traits.use` (in development), and this repo. See `AGENTS.md` for the full list.
 
 ## Maintainers
 
