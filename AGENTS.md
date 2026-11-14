@@ -29,7 +29,7 @@ nothing here applies to them.
 | `traits.build` | R package | The generic **workflow engine** + relational **data model/schema** for harmonising trait data. |
 | `austraits.build` | Compendium | The actual **AusTraits dataset compilation** (uses the engine + APD + APCalign). Produces the released `.rds`. |
 | `traits.use` | R package (0.1.1, heading for CRAN) | The generic **reader**: the access/wrangle API (load, extract, join, flatten, summarise, plot) for any `traits.build` database. Split out of `austraits` in 2026 ([austraits#188](https://github.com/traitecoevo/austraits/issues/188)). |
-| `austraits` | R package (4.0.0) | The thin **AusTraits layer** over `traits.use`: `load_austraits()` / `get_versions()` / `get_version_latest()`, the Australia basemap for `plot_locations()`, the AusTraits vignette; re-exports every `traits.use` function. |
+| `austraits` | R package (4.0.0) | The thin **AusTraits layer** over `traits.use`: `load_austraits()` / `get_versions()` / `get_version_latest()`, the Australia basemap for `plot_locations()`, the AusTraits vignette; re-exports every other `traits.use` function (it wraps `plot_locations()`). |
 | `austraits-meta` | this repo | Cross-package knowledge + governance (labels, board, playbooks). |
 
 **Other family repos** (in scope for the family/board #9 and for governance, but not pipeline core):

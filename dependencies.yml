@@ -140,7 +140,7 @@ packages:
     r_imports:
       - package: traits.use
         version: ">= 0.1.0"
-        note: re-exports every traits.use function (tests/testthat/test-reexports.R)
+        note: re-exports every traits.use function except plot_locations(), which it wraps (tests/testthat/test-reexports.R)
     r_depends: []
     data_consumes:
       - from: austraits.build (via Zenodo)
