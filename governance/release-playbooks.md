@@ -2,7 +2,7 @@
 
 Cross-package change sequences. The ordering matters because the family is a pipeline: APD (vocabulary)
 and APCalign (taxonomy) feed `austraits.build`, which uses the `traits.build` engine to produce the
-released `.rds` that `austraits` reads. See [`../AGENTS.md`](../AGENTS.md) and
+released `.rds` that `traits.use` (and `austraits`, the AusTraits layer over it) reads. See [`../AGENTS.md`](../AGENTS.md) and
 [`../dependencies.yml`](../dependencies.yml) for the graph.
 
 > ⚠️ These are templates, not verified runbooks. Confirm exact commands/scripts in each repo before
@@ -72,9 +72,10 @@ change** for everything built against the old vocabulary. Default to treating it
 2. Run traits.build's own tests/`R CMD check`.
 3. **austraits.build** (Depends `traits.build >= x`) and sibling databases — rebuild against the new
    engine; verify the produced structure.
-4. **austraits** — confirm it still reads the new structure (load + flatten/join smoke test).
-5. If the change touches `austraits::convert_*` / `bind_databases` / `flatten_database` (which
-   traits.build Imports), run traits.build's tests **because of the reversed dependency**.
+4. **traits.use** — confirm it still reads the new structure (load + flatten/join smoke test).
+5. If the change touches `traits.use::convert_*` / `bind_databases` / `flatten_database` or the trait
+   plots (which traits.build Depends on and re-exports), run traits.build's tests **because of the
+   reversed dependency**.
 
 ---
 
@@ -83,12 +84,15 @@ change** for everything built against the old vocabulary. Default to treating it
 1. **austraits.build** — build the database with the intended APD + APCalign + source-data versions.
 2. Validate; update `NEWS.md` and the compendium version.
 3. Publish the `austraits-<X.Y.Z>.rds` to **Zenodo** (record `3568418`).
-4. **austraits** — users pick it up via `load_austraits()`. Update any pinned/default version references
+4. **austraits** — users pick it up via `load_austraits()` (or `traits.use::load_database()` with the DOI). Update any pinned/default version references
    and the package's docs/tests if the default changes.
 
 ---
 
-## 5. Releasing the `austraits` access package (CRAN)
+## 5. Releasing the `traits.use` reader (CRAN)
+
+`traits.use` is the CRAN-bound package (plan: [traits.use#13](https://github.com/traitecoevo/traits.use/issues/13));
+`austraits` follows it on GitHub.
 
 > **TODO (maintainer):** document the actual CRAN release steps (R CMD check, win/mac builders,
 > `cran-comments`, version bump, tag). Same for `APCalign` (it is on CRAN with `cran-comments.md` and a
@@ -102,6 +106,6 @@ change** for everything built against the old vocabulary. Default to treating it
 |--------------|----------------------|
 | APD vocabulary | austraits.build config + rebuild; sibling DBs; (breaking) |
 | APCalign parquet/format | bump pins; austraits.build re-align |
-| traits.build schema/engine | austraits.build + sibling DBs; austraits reads |
-| austraits conversion helpers | traits.build tests (reversed dep) |
+| traits.build schema/engine | austraits.build + sibling DBs; traits.use reads |
+| traits.use helpers/plots | traits.build tests (reversed dep); austraits re-exports |
 | austraits.build sources/version | new Zenodo .rds; austraits version refs |

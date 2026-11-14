@@ -14,7 +14,7 @@ meta:
   board: https://github.com/orgs/traitecoevo/projects/9
   scope_note: >
     AusTraits family only. Does NOT apply org-wide or to other families (e.g. plant).
-  last_reviewed: 2026-06-28
+  last_reviewed: 2026-11-15
 
 packages:
 
@@ -66,13 +66,17 @@ packages:
     source_of_truth_for:
       - relational data model / schema (inst/support/traits.build_schema.yml)
       - the harmonisation workflow
-    default_branch: master
-    # NOTE reversed-looking edge: the ENGINE imports helpers from the ACCESS package.
-    r_imports:
-      - package: austraits
-        functions: [convert_list_to_df1, convert_list_to_df2, convert_df_to_list, bind_databases, flatten_database]
-        note: deprecated aliases re-exported; see traits.build/R/utils.R + NAMESPACE
-    r_depends: []
+    default_branch: develop          # a bare `traitecoevo/traits.build` Remote installs develop; release 2.2.0 is on master
+    # NOTE reversed-looking edge: the ENGINE depends on the READER.
+    r_imports: []
+    r_depends:
+      - package: traits.use
+        version: ">= 0.1.1"
+        functions: [convert_list_to_df1, convert_list_to_df2, convert_df_to_list, bind_databases, flatten_database,
+                    plot_trait_distribution, plot_categorical_trait_distribution, plot_trait_distribution_jitter]
+        note: >
+          On develop since traits.build#321/#322; the plots are re-exported. The 2.2.0 release (master)
+          still Imports austraits for the five helpers, which austraits 4.0.0 re-exports from traits.use.
     data_consumes: []
     produces:
       - traits.build_schema.yml      # authored, packaged in inst/support/
@@ -90,7 +94,9 @@ packages:
     r_imports: []
     r_depends:
       - package: traits.build
-        version: ">= 2.1.0"
+        version: ">= 2.2.0.9000"
+        remote: traitecoevo/traits.build@develop
+      - package: traits.use
     data_consumes:
       - from: APD
         artifacts: [APD_traits.csv, APD_categorical_values.csv, data/APD_trait_hierarchy.csv]
@@ -102,33 +108,15 @@ packages:
     produces:
       - austraits-<X.Y.Z>.rds          # published on Zenodo (record 3568418)
 
-  austraits:
-    repo: traitecoevo/austraits
-    kind: r-package
-    role: User-facing access / wrangling API for traits.build-format databases
-    source_of_truth_for:
-      - access/wrangle API (load, filter, join, flatten, plot)
-    default_branch: master
-    r_imports: []
-    r_depends: []
-    data_consumes:
-      - from: austraits.build (via Zenodo)
-        artifacts: [austraits-<X.Y.Z>.rds]
-        via: load_austraits()  # Zenodo record 3568418
-    produces:
-      - austraits package functions
-    assumes:
-      - Taxonomy already aligned by APCalign during austraits.build; austraits does NOT re-align.
-
   traits.use:
     repo: traitecoevo/traits.use
-    kind: r-package                  # aiming for CRAN
-    status: in-development           # created 2026-11-14; nothing released yet
+    kind: r-package                  # heading for CRAN (traits.use#13)
+    version: 0.1.1
     role: Generic reader for any traits.build database (load, extract, join, flatten, summarise, plot)
+    source_of_truth_for:
+      - access/wrangle API (load, filter, join, flatten, plot) for traits.build databases
     plan: https://github.com/traitecoevo/austraits/issues/188
-    note: >
-      Being split out of austraits, which will become a thin AusTraits layer re-exporting it.
-      Edges below are the agreed target; until the split lands, the austraits entry is current.
+    note: Split out of austraits in 2026 with its history; austraits is now a thin layer re-exporting it.
     default_branch: master
     r_imports: []                    # must never depend on traits.build (CRAN)
     r_depends: []
@@ -137,6 +125,31 @@ packages:
         via: load_database()
     produces:
       - traits.use package functions
+      - austraits_lite (24 datasets of AusTraits 7.0.0, exported example data)
+    assumes:
+      - Taxonomy already aligned by APCalign during the build; traits.use does NOT re-align.
+
+  austraits:
+    repo: traitecoevo/austraits
+    kind: r-package
+    version: 4.0.0
+    role: Thin AusTraits layer over traits.use (load AusTraits by version, Australia basemap, vignette)
+    source_of_truth_for:
+      - AusTraits release lookup (load_austraits, get_versions, get_version_latest)
+    default_branch: master
+    r_imports:
+      - package: traits.use
+        version: ">= 0.1.0"
+        note: re-exports every traits.use function (tests/testthat/test-reexports.R)
+    r_depends: []
+    data_consumes:
+      - from: austraits.build (via Zenodo)
+        artifacts: [austraits-<X.Y.Z>.rds]
+        via: load_austraits()  # Zenodo record 3568418, then traits.use::load_database()
+    produces:
+      - austraits package functions
+    assumes:
+      - Taxonomy already aligned by APCalign during austraits.build; austraits does NOT re-align.
 
   austraits-meta:
     repo: traitecoevo/austraits-meta
@@ -156,11 +169,11 @@ related_repos:
   traits.build-template: {repo: traitecoevo/traits.build-template, role: starter template for new traits.build databases}
   austraits-api:        {repo: traitecoevo/austraits-api,        role: HTTP API over AusTraits}
   austraits.org:        {repo: traitecoevo/austraits.org,        role: project website}
-  austraits.portal:     {repo: traitecoevo/austraits.portal,     role: data portal}
+  austraits.portal:     {repo: traitecoevo/austraits.portal,     role: data portal (Shiny); Imports traits.use for data preparation and the Trait View plots}
   APCalign-app:         {repo: traitecoevo/APCalign-app,         role: Shiny app for APCalign}
   austraits-means:      {repo: traitecoevo/austraits-means,      role: species-level trait means (observed + climate-centred modelled) derived from AusTraits; consumes the released database and APCalign}
-  AusFizz:              {repo: traitecoevo/AusFizz,              role: sibling traits.build database}
-  ausinvertraits.build: {repo: traitecoevo/ausinvertraits.build, role: sibling traits.build database (invertebrates)}
+  AusFizz:              {repo: traitecoevo/ausfizz,              role: sibling database (private), built with the responses.build fork of traits.build}
+  ausinvertraits.build: {repo: traitecoevo/ausinvertraits.build, role: sibling traits.build database (invertebrates, private); Depends traits.build + traits.use}
 
 # Cross-boundary artifacts (producer -> consumer). authored = hand-edited; generated = built by code.
 cross_boundary_artifacts:
@@ -192,7 +205,7 @@ cross_boundary_artifacts:
     nature: generated (build_traits_yml_from_APD.R)
   - artifact: austraits-<X.Y.Z>.rds
     producer: austraits.build (-> Zenodo)
-    consumer: austraits::load_austraits()
+    consumer: [austraits::load_austraits(), traits.use::load_database()]
     nature: generated (the released dataset)
   - artifact: traits.build_schema.yml
     producer: traits.build
