@@ -1,7 +1,7 @@
 # Filing & labelling issues — AusTraits family
 
-A short contributor guide for issues across the AusTraits family (traits.build, APCalign, austraits,
-APD, austraits.build, and the other family repos). The family is tracked on one board,
+A short contributor guide for issues across the AusTraits family (traits.build, APCalign, traits.use,
+austraits, APD, austraits.build, and the other family repos). The family is tracked on one board,
 [#9](https://github.com/orgs/traitecoevo/projects/9); new issues are **auto-added** to it.
 
 ## Where to file
@@ -9,7 +9,8 @@ APD, austraits.build, and the other family repos). The family is tracked on one 
 File in the repo the issue is *about*. Unsure which? File in the most likely one — maintainers
 re-home it. For cross-package work, file in the primary repo and link the others. See
 [`../AGENTS.md`](../AGENTS.md) for who owns what (APD = trait definitions, APCalign = taxonomy,
-traits.build = engine/schema, austraits.build = the dataset, austraits = access API).
+traits.build = engine/schema, austraits.build = the dataset, traits.use = access API,
+austraits = AusTraits layer over traits.use).
 
 ## Title
 
